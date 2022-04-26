@@ -1,8 +1,8 @@
-# DIRECTGOLib
+# DIRECTGOLib - DIRECT Global Optimization test problems Library
 
-With the introduction of **DIRECTGOLib** (which stands as **DIRECT** **G**lobal **O**ptimization **Lib**rary), we present a new and an actively growing online collection of the box- and generally-constrained  test and engineering problems for **DIRECT** (**DI**viding **RECT**angles)-type global optimization [[5]](https://link.springer.com/article/10.1007/BF00941892). 
+With the introduction of **DIRECTGOLib** (which stands as **DIRECT** **G**lobal **O**ptimization test problems **Lib**rary), we present a new and an actively growing online collection of the box- and generally-constrained  test and engineering problems for **DIRECT** (**DI**viding **RECT**angles)-type global optimization [[5]](https://link.springer.com/article/10.1007/BF00941892). 
 
-**DIRECTGOLib** is the counterpart of our previous **DIRECTLib** library [[11]](https://zenodo.org/record/3948890#.YmbmBYtBxaR), which was widely used in different studies (see, e.g., [[6](https://link.springer.com/book/10.1007/978-1-4614-9093-7), [7](https://link.springer.com/article/10.1007/s11590-017-1228-4), [8](https://link.springer.com/article/10.1007/s00158-018-2181-2), [9](https://link.springer.com/article/10.1007/s11590-021-01726-z), [10](https://www.sciencedirect.com/science/article/abs/pii/S0096300320305518)]). However, **DIRECTLib** was designed as a static library and did not offer the global optimization community comfortable opportunities to contribute to its growth. Therefore, a new **DIRECTGOLib** is designed as an open-source Github repository to which other researchers can easily contribute. 
+**DIRECTGOLib** is the is a continuation of of our previous **DIRECTLib** library [[11]](https://zenodo.org/record/3948890#.YmbmBYtBxaR), which was widely used in different studies (see, e.g., [[6](https://link.springer.com/book/10.1007/978-1-4614-9093-7), [7](https://link.springer.com/article/10.1007/s11590-017-1228-4), [8](https://link.springer.com/article/10.1007/s00158-018-2181-2), [9](https://link.springer.com/article/10.1007/s11590-021-01726-z), [10](https://www.sciencedirect.com/science/article/abs/pii/S0096300320305518)]). However, **DIRECTLib** was designed as a static library and did not offer the global optimization community comfortable opportunities to contribute to its growth. Therefore, a new **DIRECTGOLib** is designed as an open-source GitHub repository to which other researchers can easily contribute. 
 
 Moreover, all the problems are described using `MATLAB` programming language and syntax, seeking maximum usability with our recently introduced open-source tool: [DIRECTGO: A new DIRECT-type toolbox for derivative-free Global Optimization](https://github.com/blockchain-group/DIRECTGO).
 
@@ -23,69 +23,69 @@ While the problems are gathered from the various sources but below we highlight 
 
 ## Classification
 Based on the type of constraints, continuous global optimization test problems from **DIRECTGOLib** are classified into three main categories:
-- **Box-constrained** (45 problems in total)
-- **Linearly-constrained** (35 problems in total)
-- **Generally-constrained** (39 problems in total)
+- [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (47 problems in total)
+- [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (35 problems in total)
+- [Generally-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/General) (39 problems in total)
 
 We also separate problems coming from practical applications:
-- **Engineering problems** (11 problems in total).
+- [Engineering problems](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Engineering) (11 problems in total).
 
 ---
 
 ## Contribution to DIRECTGOLib
 We welcome contributions and corrections to this resource either way:
 
-- **By email** - simply send us new problems, corrections, or suggestions by email: linas.stripinis@mif.vu.lt or remigijus.paulavicius@mif.vu.lt
-- **Using Github** - fork github repository, add new problems or correct existing, then create a pull request and we gratefully incorporate your contribution!
+- **By email** - send us new problems, corrections, or suggestions by email: linas.stripinis@mif.vu.lt or remigijus.paulavicius@mif.vu.lt.
+- **GitHub way** - fork the GitHub repository, add new problems or correct existing ones, then create a pull request, and we gratefully incorporate your contribution!
 
-New problems should be described using `MATLAB` programming language and the following the syntax guideliness (compatible with all DIRECT solvers from [DIRECTGO](https://github.com/blockchain-group/DIRECTGO)).
+New problems should be described using `MATLAB` programming language and the following syntax guidelines (compatible with all DIRECT solvers from [DIRECTGO](https://github.com/blockchain-group/DIRECTGO)).
 
 ### An example of `Tproblem` description
 
 Mathematical formulation:
 
-![](img/tproblem.png)
+<img src="img/tproblem.png" width="400">
 
 Description in `MATLAB`:
 
 
 ```matlab
 function y = Tproblem(x)                 
-    if nargin == 0			              % Extract info from the problem
+    if nargin == 0			    % Extract info from the problem:
         y.nx = 0;                             % Dimension of the problem
         y.ng = 1;                             % Number of g(x) constraints
         y.nh = 0;                             % Number of h(x) constraints
         y.xl = @(i) -4;                       % Lower bounds for each variable
-        y.xu = @(i) 4;			              % Upper bounds for each variable
+        y.xu = @(i) 4;			      % Upper bounds for each variable
         y.fmin = @(nx) get_fmin(nx);          % Known solution value
         y.xmin = @(nx) get_xmin(nx);          % Known solution point
         y.confun = @(i) Tproblemc(i);         % Constraint functions
         return
     end
-    if size(x, 2) > size(x, 1)            % If x is a row transpose to column          
+    if size(x, 2) > size(x, 1)              % If x is a row transpose to column          
         x = x';
     end
-    y = sum(x);	        		          % Return function value at x
+    y = sum(x);	        		    % Return function value at x
 end
 
-function [c, ceq] = Tproblemc(x)	      % Return constraint functions
+function [c, ceq] = Tproblemc(x)	    % Return constraint functions
 	c = sum(x.^2) - length(x);
 	ceq = [];
 end
 
-function fmin = get_fmin(nx)		      % Return function which calculates minima value
+function fmin = get_fmin(nx)		    % Return function which calculates minima value
     fmin = -nx;
 end
 
-function xmin = get_xmin(nx)		      % Return function which calculates minima point
+function xmin = get_xmin(nx)		    % Return function which calculates minima point
     xmin = -ones(nx, 1);
 end
 ```
 
 All the information needed for the algorithms about test functions is available programmatically. 
 - Whenever the `MATLAB` code for the objective function is called with no arguments, the routine return a `MATLAB` structure `y` with all the necessary fields.
-- The value `y.nx = 0` meants, that the test problem is various dimensionalily which can be settled by the user.
-- The `x` vector passed to a test problem can be eather the column or a row vector.
+- The value `y.nx = 0` means that the test problem is various dimensionality that can be settled by the user.
+- The `x` vector passed to a test problem can be either the column or a row vector.
 
 ---
 
@@ -119,5 +119,5 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
 10. [Stripinis, L., Žilinskas, J., Casado, L. G., & Paulavičius, R. (2021). On MATLAB experience in accelerating DIRECT-GLce algorithm for constrained global optimization through dynamic data structures and parallelization. Applied Mathematics and Computation, 390, 125596. https://doi.org/https://doi.org/10.1016/j.amc.2020.125596](https://www.sciencedirect.com/science/article/abs/pii/S0096300320305518).
 11. [Stripinis, L. & Paulavičius, R. 2020. DIRECTLib – a library of global optimization problems for DIRECT-type methods, v1.2. https://doi.org/10.5281/zenodo.3948890](https://zenodo.org/record/3948890#.YmbmBYtBxaR).
 12. [J. Gillard and D. Kvasov. 2017. Lipschitz optimization methods for fitting a sum of damped sinusoids to a series of observations. Statistics and Its Interface 10, 1 (2017), 59–70. https://doi.org/10.4310/SII.2017.v10.n1.a6](https://www.intlpress.com/site/pub/pages/journals/items/sii/content/vols/0010/0001/a006/)
-13. [Tapabrata Ray and Kim Meow Liew. 2003. Society and civilization: An optimization algorithm based on the simulation of social behavior. IEEE Transactions on Evolutionary Computation 7, 4 (2003), 386–396. https://doi.org/10.1109/TEVC.2003.814902]([Society and civilization: An optimization algorithm based on the simulation of social behavior | IEEE Journals & Magazine | IEEE Xplore](https://ieeexplore.ieee.org/document/1223578))
+13. [Tapabrata Ray and Kim Meow Liew. 2003. Society and civilization: An optimization algorithm based on the simulation of social behavior. IEEE Transactions on Evolutionary Computation 7, 4 (2003), 386–396. https://doi.org/10.1109/TEVC.2003.814902](https://ieeexplore.ieee.org/document/1223578)
 
