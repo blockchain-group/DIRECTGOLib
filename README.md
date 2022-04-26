@@ -23,7 +23,7 @@ While the problems are gathered from the various sources but below we highlight 
 
 ## Classification
 Based on the type of constraints, continuous global optimization test problems from **DIRECTGOLib** are classified into three main categories:
-- [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (47 problems in total)
+- [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (55 problems in total)
 - [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (35 problems in total)
 - [Generally-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/General) (39 problems in total)
 
@@ -104,6 +104,29 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
   url          = {https://doi.org/10.5281/zenodo.5830927}
 }
 ```
+
+## Changelog
+
+### [v1.1](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v1.1) - (2022-04-26)
+
+**Added**
+
+Eight new [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) global optimization test problems:
+
+- `Crosslegtable.m`
+- `Damavandi.m`
+- `Deb01.m`
+- `Deb02.m`
+- `Permdb4.m`
+- `Pinter.m`
+- `Trefethen.m`
+- `Vincent.m`
+
+**Modified**
+
+One [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) global optimization test problem:
+
+- `Trid10.m`
 
 ## References
 
