@@ -11,19 +11,20 @@ Moreover, all the problems are described using `MATLAB` programming language and
 ## Problems
 There already exist various collections of [global optimization test problems](https://github.com/ekhoda/optimization_problem_libraries#global-optimization). The uniqueness of this collection is that it mainly concentrates on problems commonly used to test various DIRECT-type algorithms with at least one reliable source of experimental results.  
 
-While the problems are gathered from the various sources but below we highlight a few that form an essential part of the current version:
+Problems are gathered from the various sources, but there are several which make an essential part of the library:
 - **Global Optimization Test Problems (Hedar list)** [[1]](http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO.htm)
 - **Virtual Library of Simulation Experiments: Test Functions and Datasets** [[2]](http://www.sfu.ca/~ssurjano/index.html)
 - **CEC2006 benchmark set** [[3]](https://www.semanticscholar.org/paper/Problem-Deflnitions-and-Evaluation-Criteria-for-the-Liang-Runarsson/c8360687b24fba42bd284e0887807497433e4d39)
 - **Global bound and linear constrained problems** [[4]](http://www.norg.uminho.pt/aivaz/pswarm/)
 - **Parameter estimation in the general non-linear regression model** [[12]](https://www.intlpress.com/site/pub/pages/journals/items/sii/content/vols/0010/0001/a006/)
 - **Engineering design examples** [[13]](https://ieeexplore.ieee.org/document/1223578)
+- **New hard benchmark functions for global optimization** [[14]](https://www.mathworks.com/matlabcentral/fileexchange/106450-new-hard-benchmark-functions-for-global-optimization)
 
 ---
 
 ## Classification
 Based on the type of constraints, continuous global optimization test problems from **DIRECTGOLib** are classified into three main categories:
-- [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (55 problems in total)
+- [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (124 problems in total)
 - [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (35 problems in total)
 - [Generally-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/General) (39 problems in total)
 
@@ -51,33 +52,33 @@ Description in `MATLAB`:
 
 ```matlab
 function y = Tproblem(x)                 
-    if nargin == 0			    % Extract info from the problem:
+    if nargin == 0			                  % Extract info from the problem:
         y.nx = 0;                             % Dimension of the problem
         y.ng = 1;                             % Number of g(x) constraints
         y.nh = 0;                             % Number of h(x) constraints
         y.xl = @(i) -4;                       % Lower bounds for each variable
-        y.xu = @(i) 4;			      % Upper bounds for each variable
+        y.xu = @(i) 4;			              % Upper bounds for each variable
         y.fmin = @(nx) get_fmin(nx);          % Known solution value
         y.xmin = @(nx) get_xmin(nx);          % Known solution point
         y.confun = @(i) Tproblemc(i);         % Constraint functions
         return
     end
-    if size(x, 2) > size(x, 1)              % If x is a row transpose to column          
+    if size(x, 2) > size(x, 1)                % If x is a row transpose to column          
         x = x';
     end
-    y = sum(x);	        		    % Return function value at x
+    y = sum(x);	        		              % Return function value at x
 end
 
-function [c, ceq] = Tproblemc(x)	    % Return constraint functions
+function [c, ceq] = Tproblemc(x)	          % Return constraint functions
 	c = sum(x.^2) - length(x);
 	ceq = [];
 end
 
-function fmin = get_fmin(nx)		    % Return function which calculates minima value
+function fmin = get_fmin(nx)		          % Return function which calculates minima value
     fmin = -nx;
 end
 
-function xmin = get_xmin(nx)		    % Return function which calculates minima point
+function xmin = get_xmin(nx)		          % Return function which calculates minima point
     xmin = -ones(nx, 1);
 end
 ```
@@ -104,6 +105,29 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
   url          = {https://doi.org/10.5281/zenodo.5830927}
 }
 ```
+
+## Changelog
+
+### [v1.2](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v1.2) - (2022-06-06)
+
+**Added**
+
+69 new [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) global optimization test problems:
+
+- `AckleyN2.m`, `AckleyN3.m`, `AckleyN4.m`, `Adjiman.m`, `AlpineN1.m`
+- `BartelsConn.m`, `BiggsEXP2.m`, `BiggsEXP3.m`, `BiggsEXP4.m`, `BiggsEXP5.m`
+- `BiggsEXP6.m`, `Bird.m`, `Brad.m`, `Brown.m`, `Bukin4.m`
+- `CarromTable.m`, `ChenBird.m`, `ChenV.m`, `Chichinadze.m`, `ChungR.m`
+- `Cola.m`, `Cross_function.m`, `CrownedCross.m`, `Cube.m`,  `Cubic.m`
+- `Dejong.m`, `Dejong5.m`, `Dolan.m`, `Exponential.m`, `Exponential2.m`
+- `Exponential3.m`, `Giunta.m`, `Hartman4.m`, `HelicalValley.m`
+-  `HimmelBlau.m`, `Layeb01.m`, `Layeb02.m`, `Layeb03.m`, `Layeb04.m`
+- `Layeb05.m`, `Layeb06.m`, `Layeb07.m`, `Layeb08.m`, `Layeb09.m`
+- `Layeb10.m`, `Layeb11.m`, `Layeb12.m`, `Layeb13.m`, `Layeb14.m`
+- `Layeb15.m`, `Layeb16.m`, `Layeb17.m`, `Layeb18.m`, `Leon.m`
+- `Levi13.m`, `ModSchaffer1.m`, `ModSchaffer2.m`, `ModSchaffer3.m`, `ModSchaffer4.m`
+- `Quadratic.m`, `SineEnvelope.m`, `Sinenvsin.m`, `TestTubeHolder.m`, `Trigonometric.m`
+- `Wood.m`, `WWavy.m`, `XinSheYajngN1.m`, `XinSheYajngN2.m`, `Zettl.m`
 
 ## Changelog
 
@@ -143,4 +167,5 @@ One [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/
 11. [Stripinis, L. & Paulavičius, R. 2020. DIRECTLib – a library of global optimization problems for DIRECT-type methods, v1.2. https://doi.org/10.5281/zenodo.3948890](https://zenodo.org/record/3948890#.YmbmBYtBxaR).
 12. [J. Gillard and D. Kvasov. 2017. Lipschitz optimization methods for fitting a sum of damped sinusoids to a series of observations. Statistics and Its Interface 10, 1 (2017), 59–70. https://doi.org/10.4310/SII.2017.v10.n1.a6](https://www.intlpress.com/site/pub/pages/journals/items/sii/content/vols/0010/0001/a006/)
 13. [Tapabrata Ray and Kim Meow Liew. 2003. Society and civilization: An optimization algorithm based on the simulation of social behavior. IEEE Transactions on Evolutionary Computation 7, 4 (2003), 386–396. https://doi.org/10.1109/TEVC.2003.814902](https://ieeexplore.ieee.org/document/1223578)
+14. [abdesslem layeb (2022). New hard benchmark functions for global optimization (https://www.mathworks.com/matlabcentral/fileexchange/106450-new-hard-benchmark-functions-for-global-optimization), MATLAB Central File Exchange. Retrieved June 6, 2022.](https://www.mathworks.com/matlabcentral/fileexchange/106450-new-hard-benchmark-functions-for-global-optimization)
 
