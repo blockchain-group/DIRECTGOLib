@@ -94,15 +94,17 @@ All the information needed for the algorithms about test functions is available 
 Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
 
 ```latex
-@misc{linas_stripinis_2022_04,
-  author       = {Linas Stripinis and Remigijus Paulavicius},
-  title        = {{DIRECTGOLib - a library of global optimization problems for DIRECT-type methods}},
-  month        = April,
+@software{linas_stripinis_2022_6617799,
+  author       = {Linas Stripinis and
+                  Remigijus Paulavičius},
+  title        = {{DIRECTGOLib - Global Optimization test problems 
+                   Library}},
+  month        = jun,
   year         = 2022,
   publisher    = {Zenodo},
-  version      = {1.0},
-  doi          = {10.5281/zenodo.5830927},
-  url          = {https://doi.org/10.5281/zenodo.5830927}
+  version      = {v1.2},
+  doi          = {10.5281/zenodo.6617799},
+  url          = {https://doi.org/10.5281/zenodo.6617799}
 }
 ```
 
