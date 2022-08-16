@@ -16,9 +16,9 @@ function y = G12(x)
 %
 % Constraints (including variable bounds):
 %   g(1): (x(1)-P)^2+(x(2)-Q)^2+(x(3)-R)^2-0.0625 <= 0; where P=[1:9]; R=[1:9]; Q=[1:9]; 
-%         0 <= x(1) <= 100;
-%         0 <= x(2) <= 100;
-%         0 <= x(3) <= 100;
+%         0.2 <= x(1) <= 10;
+%         0.2 <= x(2) <= 10;
+%         0.2 <= x(3) <= 10;
 %   
 % Problem Properties:
 %   n  = 3;
@@ -29,8 +29,8 @@ if nargin == 0
     y.nx = 3;
     y.ng = 1;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 100;
+    y.xl = @(i) 0.2;
+    y.xu = @(i) 10;
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) G12c(i);

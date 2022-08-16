@@ -65,5 +65,5 @@ function fmin = get_fmin(~)
 end
 
 function xmin = get_xmin(~)
-    xmin = 0.17536188588019;
+    xmin = 0.717536188588019;
 end

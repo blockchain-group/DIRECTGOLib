@@ -83,7 +83,7 @@ ceq = [];
 end
 
 function fmin = get_fmin(~)
-    fmin = -400;
+    fmin = -600;
 end
 
 function xmin = get_xmin(~)
