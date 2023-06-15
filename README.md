@@ -25,7 +25,7 @@ Problems are gathered from the various sources, but there are several which make
 ## Classification
 Based on the type of constraints, continuous global optimization test problems from **DIRECTGOLib** are classified into three main categories:
 - [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (124 problems in total)
-- [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (35 problems in total)
+- [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (67 problems in total)
 - [Generally-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/General) (39 problems in total)
 
 We also separate problems coming from practical applications:
@@ -95,10 +95,8 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
 
 ```latex
 @software{linas_stripinis_2022_6617799,
-  author       = {Linas Stripinis and
-                  Remigijus Paulavičius},
-  title        = {{DIRECTGOLib - Global Optimization test problems 
-                   Library}},
+  author       = {Linas Stripinis and Remigijus Paulavičius},
+  title        = {DIRECTGOLib - Global Optimization test problems Library},
   month        = jun,
   year         = 2022,
   publisher    = {Zenodo},
@@ -110,25 +108,39 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
 
 ## Changelog
 
+### [v1.3](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v1.3) - (2023-06-15)
+
+**Added**
+
+34 new [linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) global optimization test problems:
+
+- `avgasa.m`, `avgasb.m`, `biggsc4.m`, `Bunnag8.m`, `Bunnag10.m`, `Bunnag11.m`, `Bunnag12.m`, `Bunnag13.m`, 
+- `Bunnag14.m`, `Bunnag15.m`, `ex2_1_1.m`, `ex2_1_2.m`, `expfita.m`, `expfitb.m`, `expfitc.m`, `Genocop7.m`, 
+- `hs086.m`, `hs118.m`, `hs268.m`, `Ji1.m`, `Ji2.m`, `Ji3.m`, `ksip.m`, `Michalewicz1.m`, `s253.m`, `s268.m`, `s277.m`, 
+- `s278.m`, `s279.m`, `s280.m`, `s331.m`, `s340.m`, `s354.m`, `s359.m`
+
+**Removed**
+
+2 duplicated [linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) global optimization test problems:
+
+- `Genocop11.m`, `hs035.m`
+
+## Changelog
+
 ### [v1.2](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v1.2) - (2022-06-06)
 
 **Added**
 
 69 new [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) global optimization test problems:
 
-- `AckleyN2.m`, `AckleyN3.m`, `AckleyN4.m`, `Adjiman.m`, `AlpineN1.m`
-- `BartelsConn.m`, `BiggsEXP2.m`, `BiggsEXP3.m`, `BiggsEXP4.m`, `BiggsEXP5.m`
-- `BiggsEXP6.m`, `Bird.m`, `Brad.m`, `Brown.m`, `Bukin4.m`
-- `CarromTable.m`, `ChenBird.m`, `ChenV.m`, `Chichinadze.m`, `ChungR.m`
-- `Cola.m`, `Cross_function.m`, `CrownedCross.m`, `Cube.m`,  `Cubic.m`
-- `Dejong.m`, `Dejong5.m`, `Dolan.m`, `Exponential.m`, `Exponential2.m`
-- `Exponential3.m`, `Giunta.m`, `Hartman4.m`, `HelicalValley.m`
--  `HimmelBlau.m`, `Layeb01.m`, `Layeb02.m`, `Layeb03.m`, `Layeb04.m`
-- `Layeb05.m`, `Layeb06.m`, `Layeb07.m`, `Layeb08.m`, `Layeb09.m`
-- `Layeb10.m`, `Layeb11.m`, `Layeb12.m`, `Layeb13.m`, `Layeb14.m`
-- `Layeb15.m`, `Layeb16.m`, `Layeb17.m`, `Layeb18.m`, `Leon.m`
-- `Levi13.m`, `ModSchaffer1.m`, `ModSchaffer2.m`, `ModSchaffer3.m`, `ModSchaffer4.m`
-- `Quadratic.m`, `SineEnvelope.m`, `Sinenvsin.m`, `TestTubeHolder.m`, `Trigonometric.m`
+- `AckleyN2.m`, `AckleyN3.m`, `AckleyN4.m`, `Adjiman.m`, `AlpineN1.m`,`BartelsConn.m`, `BiggsEXP2.m`, `BiggsEXP3.m`, 
+- `BiggsEXP4.m`, `BiggsEXP5.m`, `BiggsEXP6.m`, `Bird.m`, `Brad.m`, `Brown.m`, `Bukin4.m`, `CarromTable.m`, `ChenBird.m`, 
+- `ChenV.m`, `Chichinadze.m`, `ChungR.m`, `Cola.m`, `Cross_function.m`, `CrownedCross.m`, `Cube.m`,  `Cubic.m`,
+- `Dejong.m`, `Dejong5.m`, `Dolan.m`, `Exponential.m`, `Exponential2.m`, `Exponential3.m`, `Giunta.m`, `Hartman4.m`,
+- `HelicalValley.m`, `HimmelBlau.m`, `Layeb01.m`, `Layeb02.m`, `Layeb03.m`, `Layeb04.m`, `Layeb05.m`, `Layeb06.m`,
+- `Layeb07.m`, `Layeb08.m`, `Layeb09.m`, `Layeb10.m`, `Layeb11.m`, `Layeb12.m`, `Layeb13.m`, `Layeb14.m`, `Layeb15.m`,
+- `Layeb16.m`, `Layeb17.m`, `Layeb18.m`, `Leon.m`, `Levi13.m`, `ModSchaffer1.m`, `ModSchaffer2.m`, `ModSchaffer3.m`,
+-  `ModSchaffer4.m`, `Quadratic.m`, `SineEnvelope.m`, `Sinenvsin.m`, `TestTubeHolder.m`, `Trigonometric.m`,
 - `Wood.m`, `WWavy.m`, `XinSheYajngN1.m`, `XinSheYajngN2.m`, `Zettl.m`
 
 ## Changelog
@@ -139,14 +151,7 @@ Please use the following bibtex entry, if you consider to cite **DIRECTGOLib**:
 
 Eight new [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) global optimization test problems:
 
-- `Crosslegtable.m`
-- `Damavandi.m`
-- `Deb01.m`
-- `Deb02.m`
-- `Permdb4.m`
-- `Pinter.m`
-- `Trefethen.m`
-- `Vincent.m`
+- `Crosslegtable.m`, `Damavandi.m`, `Deb01.m`, `Deb02.m`, `Permdb4.m`, `Pinter.m`, `Trefethen.m`, `Vincent.m`
 
 **Modified**
 
