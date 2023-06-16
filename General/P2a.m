@@ -24,24 +24,10 @@ function y = P2a(x)
 %
 % Globally optimal solution:
 %   f* = -400
-%   x* = (0, 100, 1, 0, 100) 
+%   x* = [0; 100; 1; 0; 100]
 %
-% Constraints (including variable bounds):
-%   g(1): x(4)+x(1)-100                                        <= 0;
-%   g(2): -(x(4)+x(1))                                         <= 0;
-%   g(3): x(5)+x(2)-200                                        <= 0;
-%   g(4): -(x(5)+x(2))                                         <= 0;
-%   g(5): x(3)*x(5) + 2*x(2) - 1.5*(x(5)+x(2))                 <= 0;
-%   g(6): x(3)*x(4) + 2*x(1) - 2.5*(x(4)+x(1))                 <= 0;
-%   g(7): ((x(3)*x(4)+x(3)*x(5)-x(4)-x(5))/2)-500              <= 0;
-%   g(8): -((x(3)*x(4)+x(3)*x(5)-x(4)-x(5))/2)                 <= 0;
-%   g(9): x(4)+x(5) - ((x(3)*x(4)+x(3)*x(5)-x(4)-x(5))/2) -500 <= 0;
-%   g(10): -(x(4)+x(5) - ((x(3)*x(4)+x(3)*x(5)-x(4)-x(5))/2))  <= 0;
-%         0 <= x(1) <= 500;
-%         0 <= x(2) <= 500;
-%         0 <= x(3) <= 500;
-%         0 <= x(4) <= 500;
-%         0 <= x(5) <= 500;
+% Default variable bounds:
+%   0 <= x(i) <= 500, i = 1,...n
 %   
 % Problem Properties:
 %   n  = 5;
@@ -52,16 +38,14 @@ if nargin == 0
     y.nx = 5;
     y.ng = 10;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 500;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P2ac(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = -9*(x(4) + x(1)) - 15*(x(5) + x(2)) + 6*(((x(3)*x(4) +...
     x(3)*x(5) - x(4) - x(5))/2)) + 16*(x(4) + x(5) - ((x(3)*x(4) +...
@@ -80,6 +64,14 @@ c(8) = -((x(3)*x(4) + x(3)*x(5) - x(4) - x(5))/2);
 c(9) = x(4) + x(5) - ((x(3)*x(4) + x(3)*x(5) - x(4) - x(5))/2) - 500;
 c(10) = -(x(4) + x(5) - ((x(3)*x(4) + x(3)*x(5) - x(4) - x(5))/2));
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 500*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

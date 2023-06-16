@@ -10,19 +10,10 @@ function y = hs044(x)
 %
 % Globally optimal solution:
 %   f* = -15
-%   x* = (0, 3, 0, 4) 
+%   x* = [0; 3; 0; 4]
 %
-% Constraints (including variable bounds):
-%   g(1): x(1)+2*x(2)   <= 8;
-%   g(2): 4*x(1)+x(2)   <= 12;
-%   g(3): 3*x(1)+4*x(2) <= 12;
-%   g(4): 2*x(3)+x(4)   <= 8;
-%   g(5): x(3)+2*x(4)   <= 8;
-%   g(6): x(3)+x(4)<=5;
-%         0 <= x(1) <= 42;
-%         0 <= x(2) <= 42;
-%         0 <= x(3) <= 42;
-%         0 <= x(4) <= 42;
+% Default variable bounds:
+%   0 <= x(i) <= 42, i = 1,...,n
 %   
 % Problem Properties:
 %   n  = 4;
@@ -33,28 +24,33 @@ if nargin == 0
     y.nx = 4;
     y.ng = 6;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 42;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.confun = @(i) hs044c(i);
+    y.confun = @(i) funcon(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
-
+if size(x, 2) > size(x, 1), x = x'; end
 y = x(1) - x(2) - x(3) - x(1)*x(3) + x(1)*x(4) + x(2)*x(3) - x(2)*x(4);
 end
 
-function [c, ceq] = hs044c( x )
-c(1) = x(1) + 2*x(2) - 8;
-c(2) = 4*x(1) + x(2) - 12;
-c(3) = 3*x(1) + 4*x(2) - 12;
-c(4) = 2*x(3) + x(4) - 8;
-c(5) = x(3) + 2*x(4) - 8;
-c(6) = x(3) + x(4) - 5;
-ceq = [];
+function [c, ceq] = funcon( x )
+    c(1) = x(1) + 2*x(2) - 8;
+    c(2) = 4*x(1) + x(2) - 12;
+    c(3) = 3*x(1) + 4*x(2) - 12;
+    c(4) = 2*x(3) + x(4) - 8;
+    c(5) = x(3) + 2*x(4) - 8;
+    c(6) = x(3) + x(4) - 5;
+    ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 42*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

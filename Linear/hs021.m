@@ -10,12 +10,11 @@ function y = hs021(x)
 %
 % Globally optimal solution:
 %   f* = -99.96
-%   x* = (2, 0) 
+%   x* = [2; 0]
 %
-% Constraints (including variable bounds):
-%   g(1): 10*x(1)-x(2) >= 10;
-%         2   <= x(1) <= 50;
-%         -50 <= x(2) <= 50;
+% Default variable bounds:
+%   2   <= x(1) <= 50;
+%   -50 <= x(2) <= 50;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -26,25 +25,28 @@ if nargin == 0
     y.nx = 2;
     y.ng = 1;
     y.nh = 0;
-    xl = [2, -50];
-    y.xl = @(i) xl(i);
-    xu = [50, 50];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.confun = @(i) hs021c(i);
+    y.confun = @(i) funcon(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
-
+if size(x, 2) > size(x, 1), x = x'; end
 y = x(1)^2/100 + x(2)^2 - 100;
 end
 
-function [c, ceq] = hs021c( x )
-c   = -10*x(1) + x(2) + 10;
-ceq = [];
+function [c, ceq] = funcon( x )
+    c   = -10*x(1) + x(2) + 10;
+    ceq = [];
+end
+
+function xl = get_xl(~)
+    xl = [2; -50];
+end
+
+function xu = get_xu(nx)
+    xu = 50*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

@@ -10,14 +10,10 @@ function y = zecevic4(x)
 %
 % Globally optimal solution:
 %   f* = 7.5575077689317425
-%   x* = (4.97095269841094; 1.25182835834412) 
+%   x* = [4.9709529494020677; 1.2518287203958374]
 %
-% Constraints (including variable bounds):
-%     g(1) = x(1)*x(2) - x(1) - x(2) <=0  
-%     g(2) = -x(1) - x(2) + 3 <=0  
-%
-%       0 <= x(i) <= 10, i = 1...n
-%       bounds = ones(n, 1).*[0, 10];
+% Default variable bounds:
+%   0 <= x(i) <= 10, i = 1,...,n
 %   
 % Problem Properties:
 %   n  = 2;
@@ -28,16 +24,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) zecevic4c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = 6*x(1)^2 + x(2)^2 - 60*x(1) - 8*x(2) + 166;
 end
@@ -46,6 +40,14 @@ function [Ineq, eq] = zecevic4c( x )
     Ineq(1) = x(1)*x(2) - x(1) - x(2);  
     Ineq(2) = -x(1) - x(2) + 3; 
     eq=[];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

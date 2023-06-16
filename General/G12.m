@@ -11,14 +11,11 @@ function y = G12(x)
 %   Optimization. KanGAL, (May), 251–256. https://doi.org/c
 %
 % Globally optimal solution:
-%   f* = -1.0
-%   x* = (5,5,5)
+%   f* = -1
+%   x* = [5; 5; 5]
 %
-% Constraints (including variable bounds):
-%   g(1): (x(1)-P)^2+(x(2)-Q)^2+(x(3)-R)^2-0.0625 <= 0; where P=[1:9]; R=[1:9]; Q=[1:9]; 
-%         0.2 <= x(1) <= 10;
-%         0.2 <= x(2) <= 10;
-%         0.2 <= x(3) <= 10;
+% Default variable bounds:
+%   0.2 <= x(1) <= 10, i = 1,...n
 %   
 % Problem Properties:
 %   n  = 3;
@@ -29,16 +26,14 @@ if nargin == 0
     y.nx = 3;
     y.ng = 1;
     y.nh = 0;
-    y.xl = @(i) 0.2;
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) G12c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = -(100 - (x(1) - 5)^2 - (x(2) - 5)^2 - (x(3) - 5)^2)/100;
 end
@@ -61,10 +56,18 @@ c = min(Z2);
 ceq = [];
 end
 
+function xl = get_xl(nx)
+    xl = 0.2*ones(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
+end
+
 function fmin = get_fmin(~)
     fmin = -1;
 end
 
 function xmin = get_xmin(~)
-    xmin = [5, 5, 5];
+    xmin = [5; 5; 5];
 end

@@ -13,14 +13,10 @@ function y = Tension_Compression_Spring(x)
 %   f* = 0.01267867559268556071350
 %   x* = (0.05169590656, 0.35688327343, 11.2933789329) 
 %
-% Constraints (including variable bounds):
-%   g(1): 1-(((x(2)^3)*x(3))/(71875*x(1)^4))                                          <= 0;
-%   g(2): (((4*x(2)-x(1))*x(2))/(12566*(x(1)^3)*(x(2)-x(1))))+(2.46/(12566*x(1)^2))-1 <= 0;
-%   g(3): 1-((140.54*x(1))/(x(3)*x(2)^2))                                             <= 0;
-%   g(4): ((x(1)+x(2))/1.5)-1                                                         <= 0;
-%         0.05 <= x(1) <= 0.2;
-%         0.25 <= x(2) <= 1.3;
-%         2    <= x(3) <= 15;
+% Box constraints:
+%   0.05 <= x(1) <= 0.2;
+%   0.25 <= x(2) <= 1.3;
+%   2    <= x(3) <= 15;
 %   
 % Problem Properties:
 %   n  = 3;
@@ -31,17 +27,14 @@ if nargin == 0
     y.nx = 3;
     y.ng = 4;
     y.nh = 0;
-    bounds = [0.05, 0.2; 0.25, 1.3; 2, 15];
-    y.xl = @(i) bounds(i, 1);
-    y.xu = @(i) bounds(i, 2);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) Tension_Compression_Springc(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = x(1)^2*x(2)*(x(3) + 2);
 end
@@ -53,6 +46,14 @@ c(2) = (((4*x(2)-x(1))*x(2))/(12566*(x(1)^3)*(x(2) - x(1)))) +...
 c(3) = 1 - ((140.54*x(1))/(x(3)*x(2)^2));
 c(4) = ((x(1) + x(2))/1.5) - 1; 
 ceq = [];
+end
+
+function xl = get_xl(~)
+    xl = [0.05; 0.25; 2];
+end
+
+function xu = get_xu(~)
+    xu = [0.2; 1.3; 15];
 end
 
 function fmin = get_fmin(~)

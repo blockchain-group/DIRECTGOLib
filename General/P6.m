@@ -17,10 +17,9 @@ function y = P6(x)
 %   f* = 376.2919323266
 %   x* = [8.1700182298244304; 7.5607442427640450]
 %
-% Constraints (including variable bounds):
-%   g(1): -x(1) + ((0.2458*x(1)^2)/x(2)) + 6 <= 0;
-%         0       <= x(1) <= 115.8;
-%         10^(-5) <= x(2) <= 30;
+% Default variable bounds:
+%   0       <= x(1) <= 115.8;
+%   10^(-5) <= x(2) <= 30;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -31,18 +30,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 1;
     y.nh = 0;
-    xl = [0, 10^(-5)];
-    y.xl = @(i) xl(i);
-    xu = [115.8, 30];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P6c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = 29.4*x(1) + 18*x(2); 
 end
@@ -50,6 +45,14 @@ end
 function [c, ceq] = P6c( x )
 c   = -x(1) + ((0.2458*x(1)^2)/x(2)) + 6; 
 ceq = [];
+end
+
+function xl = get_xl(~)
+    xl = [0; 10^(-5)];
+end
+
+function xu = get_xu(~)
+    xu = [115.8; 30];
 end
 
 function fmin = get_fmin(~)

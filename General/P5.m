@@ -24,15 +24,11 @@ function y = P5(x)
 %
 % Globally optimal solution:
 %   f* = 201.1593340582
-%   x* = (6.29342997676684; 3.82183908126620) 
+%   x* = [6.2934299767668431; 3.8218390812661962]
 %
-% Constraints (including variable bounds):
-%   g(1): (0.5*(x(1)+x(2))^2+150)-267.42                <= 0;
-%   g(2): -(0.5*(x(1)+x(2))^2+150)                      <= 0;
-%   h(1): 30*x(1)-6*x(1)^2-(0.5*(x(1)+x(2))^2+150)+250   = 0;
-%   h(2): 20*x(2)-12*x(2)^2-(0.5*(x(1)+x(2))^2+150)+300  = 0;
-%         0 <= x(1) <= 9.422;
-%         0 <= x(2) <= 5.903;
+% Default variable bounds:
+%   0 <= x(1) <= 9.422;
+%   0 <= x(2) <= 5.903;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -43,17 +39,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 2;
-    y.xl = @(i) 0;
-    xu = [9.422, 5.903];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P5c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = 0.5*((x(1) + x(2))^2) + 150;  
 end
@@ -63,6 +56,14 @@ c(1) = (0.5*(x(1) + x(2))^2 + 150) - 267.42;
 c(2) = -(0.5*(x(1) + x(2))^2 + 150); 
 ceq(1) = abs(30*x(1) - 6*x(1)^2 - (0.5*(x(1) + x(2))^2 + 150) + 250); 
 ceq(2) = abs(20*x(2) - 12*x(2)^2 - (0.5*(x(1) + x(2))^2 + 150) + 300);  
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(~)
+    xu = [9.422; 5.903];
 end
 
 function fmin = get_fmin(~)

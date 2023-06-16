@@ -25,17 +25,11 @@ function y = P16(x)
 %
 % Globally optimal solution:
 %   f* = 0.7049249272475995
-%   x* = (1.8201759971679992; 2.9560114983146040) 
+%   x* = [1.8201759971679992; 2.9560114983146040]
 %
-% Constraints (including variable bounds):
-%   g(1): ((x(1)-1)/(36-12*x(1)))-1.5834  <= 0;
-%   g(2): ((x(2)-x(1))/(32-8*x(2)))-3.625 <= 0;
-%   g(3): ((5-x(2))/4)-1                  <= 0;
-%   g(4): -((x(1)-1)/(36-12*x(1)))        <= 0;
-%   g(5): -((x(2)-x(1))/(32-8*x(2)))      <= 0;
-%   g(6): -((5-x(2))/4)                   <= 0;
-%         1 <= x(1) <= 3;
-%         1 <= x(2) <= 4;
+% Default variable bounds:
+%   1 <= x(1) <= 3;
+%   1 <= x(2) <= 4;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -46,17 +40,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 6;
     y.nh = 0;
-    y.xl = @(i) 1;
-    xu =[3, 4];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P16c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = ((x(1) - 1)/(36 - 12*x(1))) + ((x(2) -...
     x(1))/(32 - 8*x(2))) + ((5 - x(2))/4); 
@@ -70,6 +61,14 @@ c(4) = -((x(1) - 1)/(36 - 12*x(1)));
 c(5) = -((x(2) - x(1))/(32 - 8*x(2))); 
 c(6) = -((5 - x(2))/4); 
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = ones(nx, 1);
+end
+
+function xu = get_xu(~)
+    xu = [3; 4];
 end
 
 function fmin = get_fmin(~)

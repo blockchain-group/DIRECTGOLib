@@ -12,13 +12,11 @@ function y = G24(x)
 %
 % Globally optimal solution:
 %   f* = -5.5080124715950696
-%   x* = (2.3295202619441824, 3.1784922096508876) 
+%   x* = [2.3295202619441824; 3.1784922096508876]
 %
-% Constraints (including variable bounds):
-%   g(1): -2*x(1)^4+8*x(1)^3-8*x(1)^2+x(2)-2            <= 0;
-%   g(2): -4*x(1)^4+32*x(1)^3-88*x(1)^2+96*x(1)+x(2)-36 <= 0;
-%          0 <= x(1) <= 3;
-%          0 <= x(2) <= 4;
+% Default variable bounds:
+%   0 <= x(1) <= 3;
+%   0 <= x(2) <= 4;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -29,17 +27,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) 0;
-    xu = [3, 4];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) G24c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = -x(1) - x(2);
 end
@@ -48,6 +43,14 @@ function [c, ceq] = G24c( x )
 c(1) = -2*x(1)^4 + 8*x(1)^3 - 8*x(1)^2 + x(2) - 2;  
 c(2) = -4*x(1)^4 + 32*x(1)^3 - 88*x(1)^2 + 96*x(1) + x(2) - 36;  
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(~)
+    xu = [3; 4];
 end
 
 function fmin = get_fmin(~)

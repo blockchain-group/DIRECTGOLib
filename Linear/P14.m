@@ -24,16 +24,12 @@ function y = P14(x)
 %
 % Globally optimal solution:
 %   f* = -4.5142016513619279
-%   x* = (4/3, 4, 0) 
+%   x* = [4/3; 4; 0]
 %
-% Constraints (including variable bounds):
-%   g(1): (1/3)*x(2)-x(1)-2          <= 0;
-%   g(2): x(1)+2*((1/3)*x(2)-x(1))-4 <= 0;
-%   g(3): x(2)+2*x(3)-4              <= 0;
-%   g(4): -((1/3)*x(2)-x(1))         <= 0;
-%         10^(-5) <= x(1) <= 3;
-%         10^(-5) <= x(2) <= 4;
-%         0       <= x(3) <= 1;
+% Default variable bounds:
+%   10^(-5) <= x(1) <= 3;
+%   10^(-5) <= x(2) <= 4;
+%   0       <= x(3) <= 1;
 %   
 % Problem Properties:
 %   n  = 3;
@@ -44,28 +40,33 @@ if nargin == 0
     y.nx = 3;
     y.ng = 4;
     y.nh = 0;
-    xl = [10^(-5), 10^(-5), 0];
-    y.xl = @(i) xl(i);
-    xu = [3, 4, 1];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.confun = @(i) P14c(i);
+    y.confun = @(i) funcon(i);
     return
 end
 if size(x, 2) > size(x, 1)
     x = x'; 
 end
-
 y = x(1)^(0.6) + x(2)^(0.6) - 2*x(1) - (4/3)*x(2) + 3*x(3); 
 end
 
-function [c, ceq] = P14c( x )
-c(1) = (1/3)*x(2) - x(1) - 2; 
-c(2) = x(1) + 2*((1/3)*x(2) - x(1)) - 4; 
-c(3) = x(2) + 2*x(3) - 4; 
-c(4) = -((1/3)*x(2) - x(1)); 
-ceq = [];
+function [c, ceq] = funcon( x )
+    c(1) = (1/3)*x(2) - x(1) - 2; 
+    c(2) = x(1) + 2*((1/3)*x(2) - x(1)) - 4; 
+    c(3) = x(2) + 2*x(3) - 4; 
+    c(4) = -((1/3)*x(2) - x(1)); 
+    ceq = [];
+end
+
+function xl = get_xl(~)
+    xl = [10^(-5); 10^(-5); 0];
+end
+
+function xu = get_xu(~)
+    xu = [3; 4; 1];
 end
 
 function fmin = get_fmin(~)

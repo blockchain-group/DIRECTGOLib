@@ -24,12 +24,10 @@ function y = P12(x)
 %
 % Globally optimal solution:
 %   f* = -16.738893184394637
-%   x* = (0.717536188588019) 
+%   x* = 0.717536188588019 
 %
-% Constraints (including variable bounds):
-%   g(1): 2-2*x(1)^4-3  <= 0;
-%   g(2): -(2-2*x(1)^4) <= 0;
-%         0 <= x(1) <= 2;
+% Default variable bounds:
+%   0 <= x(1) <= 2;
 %   
 % Problem Properties:
 %   n  = 1;
@@ -40,16 +38,14 @@ if nargin == 0
     y.nx = 1;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 2;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P12c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = -12*x(1) + 6*x(1)^4 + 4*x(1)^8 - 10; 
 end
@@ -58,6 +54,14 @@ function [c, ceq] = P12c( x )
 c(1) = 2 - 2*x(1)^4 - 3; 
 c(2) = -(2 - 2*x(1)^4);   
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 2*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

@@ -27,31 +27,24 @@ if nargin == 0
     y.nx = 3;
     y.ng = 0;
     y.nh = 0;
-    bounds = [-1, 0; 0, 1; 0, 1];
-    y.xl = @(i) bounds(i, 1);
-    y.xu = @(i) bounds(i, 2);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
+if size(x, 2) > size(x, 1), x = x'; end
+
+y = sum((exp(-0.2*(1:10)).*sin(2*pi*0.4*(1:10) + 0.3) - ...
+    exp(x(1)*(1:10)).*sin(2*pi*x(2)*(1:10) + x(3))).^2);
 end
 
-T = 10; 
-zhig_y4 = zeros(1,T);
-for j=1:T
-  zhig_y4(j) = 1*exp(-0.2*j)*sin(2*pi*0.4*j + 0.3);
+function xl = get_xl(~)
+    xl = [-1; 0; 0];
 end
-xt = zeros(1,T);
-for j=1:T
-   xt(j) = exp(x(1)*j)*sin(2*pi*x(2)*j + x(3));
-end
-y = 0;
-for j=1:T
-  zz_temp = (zhig_y4(j) - xt(j))^2;
-  y = y + zz_temp;
-end
+
+function xu = get_xu(~)
+    xu = [0; 1; 1];
 end
 
 function fmin = get_fmin(~)

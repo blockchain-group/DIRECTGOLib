@@ -1,4 +1,4 @@
-function y = P15(x)
+function y = P15(~)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -14,15 +14,12 @@ function y = P15(x)
 %
 % Globally optimal solution:
 %   f* = 0
-%   x* = (10.6018948261553; 31.8056843775809; 7.59242078959846) 
+%   x* = [10.6018948261553; 31.8056843775809; 7.59242078959846]
 %
-% Constraints (including variable bounds):
-%   h(1): x(1)+x(2)+x(3)-50             = 0;
-%   h(2): x(2)/x(1)-3                   = 0;
-%   h(3): x(3)^2/(x(1)*x(2)^3)-0.000169 = 0;
-%         10^(-5) <= x(1) <= 12.5;
-%         10^(-5) <= x(2) <= 37.5;
-%         0       <= x(3) <= 50;
+% Default variable bounds:
+%   10^(-5) <= x(1) <= 12.5;
+%   10^(-5) <= x(2) <= 37.5;
+%   0       <= x(3) <= 50;
 %   
 % Problem Properties:
 %   n  = 3;
@@ -33,15 +30,14 @@ if nargin == 0
     y.nx = 3;
     y.ng = 0;
     y.nh = 3;
-    xl = [10^(-5), 10^(-5), 0];
-    y.xl = @(i) xl(i);
-    xu = [12.5, 37.5, 50];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P15c(i);
     return
 end
+
 y = 0; 
 end
 
@@ -50,6 +46,14 @@ c = [];
 ceq(1) = abs(x(3)^2/(x(1)*x(2)^3) - 0.000169); 
 ceq(2) = abs(x(2)/x(1) - 3); 
 ceq(3) = abs(x(1) + x(2) + x(3) - 50); 
+end
+
+function xl = get_xl(~)
+    xl = [10^(-5); 10^(-5); 0];
+end
+
+function xu = get_xu(~)
+    xu = [12.5; 37.5; 50];
 end
 
 function fmin = get_fmin(~)

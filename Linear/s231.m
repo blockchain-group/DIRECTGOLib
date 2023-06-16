@@ -10,13 +10,10 @@ function y = s231(x)
 %
 % Globally optimal solution:
 %   f* = 0
-%   x* = (1, 1)
+%   x* = [1; 1]
 %
-% Constraints (including variable bounds):
-%   g(1): x(1)/3 - x(2) - 0.1  <= 0;
-%   g(2): -x(1)/3 - x(2) - 0.1 <= 0;
-%         -10 <= x(1) <= 10;
-%         -10 <= x(2) <= 10;
+% Default variable bounds:
+%   -10 <= x(i) <= 10, i = 1,...,n
 %   
 % Problem Properties:
 %   n  = 2;
@@ -27,25 +24,31 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) -10;
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.confun = @(i) s231c(i);
+    y.confun = @(i) funcon(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
-
+if size(x, 2) > size(x, 1), x = x'; end
 y = 100*((x(2) - x(1)^2)^2) + (1 - x(1))^2;
 end
 
-function [c, ceq] = s231c( x )
-c(1) = -x(1)/3 - x(2) - 0.1;
-c(2) = x(1)/3 - x(2) - 0.1;
-ceq = [];
+function [c, ceq] = funcon( x )
+    c(1) = -x(1)/3 - x(2) - 0.1;
+    c(2) = x(1)/3 - x(2) - 0.1;
+    ceq = [];
 end
+
+function xl = get_xl(nx)
+    xl = -10*ones(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
+end
+
 
 function fmin = get_fmin(~)
     fmin = 0;

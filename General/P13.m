@@ -14,14 +14,12 @@ function y = P13(x)
 %
 % Globally optimal solution:
 %   f* = 189.3465728929122349
-%   x* = (0.0000100000000010; 16.6666583333016725; 100.0001000001799696) 
+%   x* = [0.0000100000000010; 16.6666583333016725; 100.0001000001799696]
 %
-% Constraints (including variable bounds):
-%   h(1): 600*x(1)-50*x(3)-x(1)*x(3)+5000 = 0;
-%   h(2): 600*x(2)+50*x(3)-15000          = 0;
-%         10^(-5) <= x(1) <= 34;
-%         10^(-5) <= x(2) <= 17;
-%         100     <= x(3) <= 300;
+% Default variable bounds:
+%   10^(-5) <= x(1) <= 34;
+%   10^(-5) <= x(2) <= 17;
+%   100     <= x(3) <= 300;
 %   
 % Problem Properties:
 %   n  = 3;
@@ -32,18 +30,14 @@ if nargin == 0
     y.nx = 3;
     y.ng = 0;
     y.nh = 2;
-    xl = [10^(-5), 10^(-5), 0];
-    y.xl = @(i) xl(i);
-    xu = [34, 17, 300];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P13c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = 35*x(1)^(0.6) + 35*x(2)^(0.6); 
 end
@@ -52,6 +46,14 @@ function [c, ceq] = P13c( x )
 ceq(1) = abs(600*x(1) - 50*x(3) - x(1)*x(3) + 5000); 
 ceq(2) = abs(600*x(2) + 50*x(3) - 15000); 
 c = [];
+end
+
+function xl = get_xl(~)
+    xl = [10^(-5); 10^(-5); 0];
+end
+
+function xu = get_xu(~)
+    xu = [34; 17; 300];
 end
 
 function fmin = get_fmin(~)

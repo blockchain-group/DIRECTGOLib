@@ -25,8 +25,8 @@ if nargin == 0
     y.nx = 5;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) 0; 
-    y.xu = @(i) 20;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) funcon(i);
@@ -50,6 +50,14 @@ function [c, ceq] = funcon( x )
     c(1) = sum(arrayfun(@(i) -(x(1)+x(2)*T(i)+x(3)*T(i)^2 - (T(i)-5)*ET(i)*x(5) - (T(i)-5)^2*ET(i)*x(4) -ET(i)), 1:R));
     c(2) = sum(arrayfun(@(i) -((T(i)-5)*x(5) + (T(i)-5)^2*x(4)+0.99999), 1:R));
     ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 20*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

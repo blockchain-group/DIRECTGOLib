@@ -14,13 +14,10 @@ function y = P10(x)
 %
 % Globally optimal solution:
 %   f* = 0.7417819582470551
-%   x* = (0.1294095225512604; 0.4829629131445343) 
+%   x* = [0.1294095225512604; 0.4829629131445343]
 %
-% Constraints (including variable bounds):
-%   g(1): -16*x(1)*x(2)+1      <= 0;
-%   g(2): -4*x(1)^2-4*x(2)^2+1 <= 0;
-%         0 <= x(1) <= 1;
-%         0 <= x(2) <= 1;
+% Default variable bounds:
+%   0 <= x(i) <= 1, i = 1,...n
 %   
 % Problem Properties:
 %   n  = 2;
@@ -31,16 +28,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 1;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P10c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = 2*x(1) + x(2); 
 end
@@ -49,6 +44,14 @@ function [c, ceq] = P10c( x )
 c(1) = -16*x(1)*x(2) + 1;
 c(2) = -4*x(1)^2 - 4*x(2)^2 + 1;
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

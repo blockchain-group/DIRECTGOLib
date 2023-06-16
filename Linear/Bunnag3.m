@@ -11,17 +11,12 @@ function y = Bunnag3(x)
 %
 % Globally optimal solution:
 %   f* = -16.369269956672596
-%   x* = (0, 0, 4, 12/9, 0)
+%   x* = [0; 0; 4; 12/9; 0]
 %
-% Constraints (including variable bounds):
-%   g(1): x(1)+2*x(4)          <= 4;
-%   g(2): 3*x(1)+3*x(4)+x(5)   <= 4;
-%   g(3): 2*x(2)+4*x(4)+2*x(5) <= 6;
+% Default variable bounds:
 %         0 <= x(1) <= 3;
-%         0 <= x(2) <= 2;
-%         0 <= x(3) <= 4;
-%         0 <= x(4) <= 4;
-%         0 <= x(5) <= 2;
+%         0 <= x(2, 5) <= 2;
+%         0 <= x(3, 4) <= 4;
 %   
 % Problem Properties:
 %   n  = 5;
@@ -32,26 +27,30 @@ if nargin == 0
     y.nx = 5;
     y.ng = 3;
     y.nh = 0;
-    y.xl = @(i) 0;
-    xu = [3, 2, 4, 4,2];
-    y.xu = @(i) xu(i);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.confun = @(i) Bunnag3c(i);
+    y.confun = @(i) funcon(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
-
+if size(x, 2) > size(x, 1), x = x'; end
 y = x(1)^0.6 + x(2)^0.6 + x(3)^0.6 - 4*x(3) - 2*x(4) + 5*x(5);
 end
 
-function [c, ceq] = Bunnag3c( x )
-c(1) = x(1) + 2*x(4) - 4; 
-c(2) = 3*x(1) + 3*x(4) + x(5) - 4; 
-c(3) = 2*x(2) + 4*x(4) + 2*x(5) - 6; 
-ceq = [];
+function [c, ceq] = funcon( x )
+    c(1) = x(1) + 2*x(4) - 4; 
+    c(2) = 3*x(1) + 3*x(4) + x(5) - 4; 
+    c(3) = 2*x(2) + 4*x(4) + 2*x(5) - 6; 
+    ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(~)
+    xu = [3; 2; 4; 4; 2];
 end
 
 function fmin = get_fmin(~)

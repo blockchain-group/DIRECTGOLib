@@ -13,12 +13,9 @@ function y = Three_bar_truss(x)
 %   f* = 263.8958433764917686
 %   x* = (0.7886753129194131; 0.4082477860859604) 
 %
-% Constraints (including variable bounds):
-%   g(1): ((sqrt(2)*x(1)+x(2))/(sqrt(2)*x(1)^2+2*x(1)*x(2)))*2-2 <= 0;
-%   g(2): ((x(2))/(sqrt(2)*x(1)^2+2*x(1)*x(2)))*2-2              <= 0;
-%   g(3): ((1)/(x(1) + sqrt(2)*x(2)))*2-2                        <= 0;
-%         0 <= x(1) <= 1;
-%         0 <= x(2) <= 1;
+% Box constraints:
+%   0 <= x(1) <= 1;
+%   0 <= x(2) <= 1;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -29,17 +26,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 3;
     y.nh = 0;
-    bounds = [0, 1; 0, 1];
-    y.xl = @(i) bounds(i, 1);
-    y.xu = @(i) bounds(i, 2);
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) Three_bar_trussc(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = (2*sqrt(2)*x(1) + x(2))*100;
 end
@@ -49,6 +43,14 @@ c(1) = ((sqrt(2)*x(1) + x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2;
 c(2) = ((x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2; 
 c(3) = ((1)/(x(1) + sqrt(2)*x(2)))*2 - 2; 
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

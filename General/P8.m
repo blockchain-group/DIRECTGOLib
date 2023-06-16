@@ -14,13 +14,11 @@ function y = P8(x)
 %
 % Globally optimal solution:
 %   f* = -118.7048597749956969
-%   x* = (-3.1735990999628472; 1.7245330473592981) 
+%   x* = [-3.1735990999628472; 1.7245330473592981]
 %
-% Constraints (including variable bounds):
-%   g(1): x(2)-x(1)^2-2*x(1)+2 <= 0;
-%   g(2): -x(1)+x(2)-8         <= 0;
-%         -8 <= x(1) <= 10;
-%         0  <= x(2) <= 10;
+% Default variable bounds:
+%   -8 <= x(1) <= 10;
+%   0  <= x(2) <= 10;
 %   
 % Problem Properties:
 %   n  = 2;
@@ -31,17 +29,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    xl = [-8, 0];
-    y.xl = @(i) xl(i);
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) P8c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = x(1)^4 - 14*x(1)^2 + 24*x(1) - x(2)^2;
 end
@@ -50,6 +45,14 @@ function [c, ceq] = P8c( x )
 c(1) = x(2) - x(1)^2 - 2*x(1) + 2;
 c(2) = -x(1) + x(2) - 8;
 ceq = [];
+end
+
+function xl = get_xl(~)
+    xl = [-8; 0];
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

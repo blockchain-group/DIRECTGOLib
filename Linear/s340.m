@@ -24,8 +24,8 @@ if nargin == 0
     y.nx = 3;
     y.ng = 1;
     y.nh = 0;
-    y.xl = @(i) 0.0001; 
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) funcon(i);
@@ -40,6 +40,14 @@ end
 function [c, ceq] = funcon( x )
     c = -1.8 + x(1) + 2*x(2) + 2*x(3);
     ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = 0.0001*ones(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

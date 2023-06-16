@@ -10,11 +10,10 @@ function y = Tproblem(x)
 %
 % Globally optimal solution:
 %   f* = -n
-%   x* = [-1, -1, ..., -1]  
+%   x(i)* = -1, i = 1,...,n
 %
-% Constraints (including variable bounds):
-%   g(1): sum(x(i)^2) - n <= 0;, i = 1...n
-%         -4 <= x(i) <= 4;, i = 1...n
+% Default variable bounds:
+%   -4 <= x(i) <= 4, i = 1,...,n
 %   
 % Problem Properties:
 %   n  = any dimension;
@@ -25,22 +24,16 @@ if nargin == 0
     y.nx = 0;
     y.ng = 1;
     y.nh = 0;
-    y.xl = @(i) -4;
-    y.xu = @(i) 4;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) Tproblemc(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
-n = length(x);
-y = 0;
-for i = 1:n
-    y = y + x(i);
-end
+y = sum(x);
 end
 
 function [c, ceq] = Tproblemc( x )
@@ -51,6 +44,14 @@ for i = 1:n
 end
 c = ff - n;
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = -4*ones(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 4*ones(nx, 1);
 end
 
 function fmin = get_fmin(nx)

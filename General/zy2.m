@@ -10,15 +10,10 @@ function y = zy2(x)
 %
 % Globally optimal solution:
 %   f* = 2
-%   x* = (0; 2; 0) 
+%   x* = [0; 2; 0]
 %
-% Constraints (including variable bounds):
-%     g(1) = -x(1)^2 - x(2)^2 - x(3)^2 + 4 <=0  
-%     g(2) = x(1)^2 + x(2)^2 + x(3)^2 - 10 <=0  
-%     g(3) = x(3) - 5 <=0 
-%
-%       0 <= x(i) <= 10, i = 1...n
-%       bounds = ones(n, 1).*[0, 10];
+% Default variable bounds:
+%   0 <= x(i) <= 10, i = 1,...,n
 %   
 % Problem Properties:
 %   n  = 3;
@@ -29,16 +24,14 @@ if nargin == 0
     y.nx = 3;
     y.ng = 3;
     y.nh = 0;
-    y.xl = @(i) 0;
-    y.xu = @(i) 10;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) zy2c(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = x(1)^3 - 6*x(1)^2 + 11*x(1) + x(2) + x(3);
 end
@@ -48,6 +41,14 @@ function [Ineq, eq] = zy2c(x)
     Ineq(2) = x(1)^2 + x(2)^2 + x(3)^2 - 10; 
     Ineq(3) = x(3) - 5; 
     eq = [];
+end
+
+function xl = get_xl(nx)
+    xl = zeros(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 10*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)

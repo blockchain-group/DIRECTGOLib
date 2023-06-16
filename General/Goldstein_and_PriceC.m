@@ -11,13 +11,10 @@ function y = Goldstein_and_PriceC(x)
 %
 % Globally optimal solution:
 %   f* = 3.5389358964718735656163
-%   x* = (0.0486962985939948, -0.9846352613587941)  
+%   x* = [0.0486962985939948; -0.9846352613587941]
 %
-% Constraints (including variable bounds):
-%   g(1): -((x(1)-1)^2)-((x(2)-1)^2)+0.9 <= 0;
-%   g(2): -((x(1)+1)^2)-((x(2)+1)^2)+1.1 <= 0;
-%         -2 <= x(1) <= 2;
-%         -2 <= x(2) <= 2;
+% Default variable bounds:
+%   -2 <= x(i) <= 2, i = 1,...n
 %   
 % Problem Properties:
 %   n  = 2;
@@ -28,16 +25,14 @@ if nargin == 0
     y.nx = 2;
     y.ng = 2;
     y.nh = 0;
-    y.xl = @(i) -2;
-    y.xu = @(i) 2;
+    y.xl = @(nx) get_xl(nx); 
+    y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
     y.confun = @(i) Goldstein_and_Pricecc(i);
     return
 end
-if size(x, 2) > size(x, 1)
-    x = x'; 
-end
+if size(x, 2) > size(x, 1), x = x'; end
 
 y = (1 + (x(1) + x(2) + 1).^2.*(19 - 14.*x(1) + 3.*x(1).^2-14.*x(2) +...
     6.*x(1).*x(2) + 3.*x(2).^2)).*(30 + (2.*x(1) -...
@@ -49,6 +44,14 @@ function [c, ceq] = Goldstein_and_Pricecc( x )
 c(1) = -((x(1) - 1)^2) - ((x(2) - 1)^2) + 0.9;
 c(2) = -((x(1) + 1)^2) - ((x(2) + 1)^2) + 1.1;
 ceq = [];
+end
+
+function xl = get_xl(nx)
+    xl = -2*ones(nx, 1);
+end
+
+function xu = get_xu(nx)
+    xu = 2*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)
