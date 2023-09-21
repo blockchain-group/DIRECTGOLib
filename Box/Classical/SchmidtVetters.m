@@ -25,8 +25,8 @@ function y = SchmidtVetters(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Non-differentiable, Non-separable, Non-scalable, Multi-modal,
-%   Non-convex, Plateau, Non-Zero-Solution, Asymmetric
+%   Differentiable, Non-separable, Non-scalable, Multi-modal,
+%   Non-convex, Non-plateau, Non-Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
     y.nx = 3;
@@ -36,12 +36,11 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [0, 0, 0, 1, 0, 1, 0, 0];
+    y.features = [1, 0, 0, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 1, 1, 0, 0, 0, 0, 0];
     return
 end
 if size(x, 2) > size(x, 1), x = x'; end
-
 
 y = 1/(1 + (x(1) - x(2))^2) + sin((pi*x(2) + x(3))/2) + exp(((x(1) + x(2))/(x(2) + 1e-10) - 2)^2);
 end

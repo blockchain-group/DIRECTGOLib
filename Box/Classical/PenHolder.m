@@ -38,7 +38,7 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [1, 0, 0, 1, 0, 1, 0, 1];
+    y.features = [1, 0, 0, 1, 0, 0, 0, 1];
     y.libraries = [0, 0, 0, 1, 1, 0, 1, 0, 0, 0];
     return
 end

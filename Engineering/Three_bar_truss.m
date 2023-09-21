@@ -9,14 +9,10 @@ function y = Three_bar_truss(x)
 %   Engineering Optimization Problems with the Simple Constrained Particle 
 %   Swarm Optimizer, Informatica (Slovenia), Vol.3, No.32, pp. 319-326, 2008. 
 %
-% Globally optimal solution:
+% Known optimal solution:
 %   f* = 263.8958433764917686
-%   x* = (0.7886753129194131; 0.4082477860859604) 
+%   x* = [0.788675136247114; 0.408248285790449]
 %
-% Box constraints:
-%   0 <= x(1) <= 1;
-%   0 <= x(2) <= 1;
-%   
 % Problem Properties:
 %   n  = 2;
 %   #g = 3;
@@ -33,16 +29,18 @@ if nargin == 0
     y.confun = @(i) Three_bar_trussc(i);
     return
 end
-if size(x, 2) > size(x, 1), x = x'; end
+if size(x, 2) > size(x, 1)
+    x = x'; 
+end
 
 y = (2*sqrt(2)*x(1) + x(2))*100;
 end
 
 function [c, ceq] = Three_bar_trussc( x )
-c(1) = ((sqrt(2)*x(1) + x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2; 
-c(2) = ((x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2; 
-c(3) = ((1)/(x(1) + sqrt(2)*x(2)))*2 - 2; 
-ceq = [];
+    c(1) = ((sqrt(2)*x(1) + x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2; 
+    c(2) = ((x(2))/(sqrt(2)*x(1)^2 + 2*x(1)*x(2)))*2 - 2; 
+    c(3) = ((1)/(x(1) + sqrt(2)*x(2)))*2 - 2; 
+    ceq = [];
 end
 
 function xl = get_xl(nx)
@@ -54,9 +52,9 @@ function xu = get_xu(nx)
 end
 
 function fmin = get_fmin(~)
-    fmin = 263.8958433764917686;
+    fmin = 263.8958433764684;
 end
 
 function xmin = get_xmin(~)
-    xmin = [0.7886753129194131; 0.4082477860859604];
+    xmin = [0.788675136247114; 0.408248285790449];
 end

@@ -9,14 +9,9 @@ function y = Non_Reg_n6_T10(x)
 %   fitting a sum of damped sinusoids to a series of observations. Statistics
 %   and its Interface doi:10.4310/SII.2017.v10.n1.a6.. 
 %
-% Globally optimal solution:
+% Known optimal solution:
 %   f* = 0
 %   x* = [-0.3; 0.3; 0.1; -0.2; 0.4; 0.3]
-%
-% Box constraints:
-%   -1 <= x(1,4) <= 0;
-%   0  <= x(2,5) <= 1;
-%   0  <= x(3,6) <= 1;
 %   
 % Problem Properties:
 %   n  = 6;

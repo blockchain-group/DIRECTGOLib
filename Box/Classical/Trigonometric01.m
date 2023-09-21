@@ -28,7 +28,7 @@ function y = Trigonometric01(x)
 %
 % Known characteristics of test function:
 %   Differentiable, Non-separable, Scalable, Multi-modal,
-%   Non-convex, Plateau, Zero-Solution, Asymmetric
+%   Non-convex, Non-plateau, Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
     y.nx = 0;
@@ -38,7 +38,7 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [1, 0, 1, 1, 0, 1, 1, 0];
+    y.features = [1, 0, 1, 1, 0, 0, 1, 0];
     y.libraries = [0, 0, 0, 1, 1, 0, 1, 0, 0, 0];
     return
 end

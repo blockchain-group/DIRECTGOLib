@@ -46,7 +46,6 @@ end
 if size(x, 2) > size(x, 1), x = x'; end
 
 y = 100*x(2)^2 + 0.01*abs(x(1) + 10);
-y = min([y, 100]);
 end
 
 function xl = get_xl(~)
