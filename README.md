@@ -1,6 +1,6 @@
 # DIRECTGOLib - DIRECT Global Optimization test problems Library
 
-![languages](https://img.shields.io/badge/language-MATLAB, R-blue)  ![release](https://img.shields.io/badge/release-v2.0-blue)  ![OS](https://img.shields.io/badge/OS-windows,linux,macOS-blue)  ![License](https://img.shields.io/badge/License-MIT-blue)  ![contributions](https://img.shields.io/badge/contributions-welcome-greene)
+![languages](https://img.shields.io/badge/language-MATLAB,R-blue)  ![release](https://img.shields.io/badge/release-v2.0-blue)  ![OS](https://img.shields.io/badge/OS-windows,linux,macOS-blue)  ![License](https://img.shields.io/badge/License-MIT-blue)  ![contributions](https://img.shields.io/badge/contributions-welcome-greene)
 
 ## Table of Contents
 
