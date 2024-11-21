@@ -1,4 +1,4 @@
-function y = RastriginBBOB(x)
+function y = RastriginBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,19 +32,21 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 1, 1, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 3;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid scale
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 3 || isempty(scale)
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst || isempty(scale)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 3;
+    funid = inst;
     scale = (sqrt(10).^linspace(0, 1, dim))';
 end
 z = asy(toz(x_shift(x, xopt)), 0.2).*scale;
@@ -115,10 +117,14 @@ function r = unif(N, inseed)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 3)/gauss(1, 3 + 1))/100)])]);
+    funid = 3;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 3))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 3;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     xmin(xmin == 0) = -1e-5;
 end

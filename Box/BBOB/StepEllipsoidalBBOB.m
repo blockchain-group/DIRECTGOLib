@@ -1,4 +1,4 @@
-function y = StepEllipsoidalBBOB(x)
+function y = StepEllipsoidalBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,23 +32,25 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 0, 1, 0, 0, 1, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 7;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid rotation scales linearTF
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 7 ...
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst ...
    || isempty(rotation) || isempty(scales) || isempty(linearTF)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 7;
-    rotation = compute_rotation(7 + 1e+6, dim);
+    funid = inst;
+    rotation = compute_rotation(inst + 1e+6, dim);
     scales = (100.^linspace(0, 1, dim))';
-    linearTF = compute_rotation(7, dim)*diag(sqrt(100/10).^linspace(0, 1, dim));
+    linearTF = compute_rotation(inst, dim)*diag(sqrt(100/10).^linspace(0, 1, dim));
 end
 z = (x_shift(x, xopt)')*linearTF;
 x1 = abs(z(1));
@@ -129,10 +131,14 @@ function r = unif(N, inseed)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 7)/gauss(1, 7 + 1))/100)])]);
+    funid = 7;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 7))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 7;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     xmin(xmin == 0) = -1e-5;
 end

@@ -1,4 +1,4 @@
-function y = RosenbrockRotatedBBOB(x)
+function y = RosenbrockRotatedBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,20 +32,22 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 0, 1, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 9;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid linearTF
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 9 || isempty(linearTF)
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst || isempty(linearTF)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 9;
-    linearTF = max([1, sqrt(dim)/8]).*compute_rotation(9, dim);
+    funid = inst;
+    linearTF = max([1, sqrt(dim)/8]).*compute_rotation(inst, dim);
 end
 z = x'*linearTF + 0.5;
 y = sum(100*(z(1:end - 1).^2 - z(2:end)).^2) + sum((z(1:end - 1) - 1).^2) + fopt;
@@ -105,11 +107,15 @@ function r = unif(N, inseed)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 9)/gauss(1, 9 + 1))/100)])]);
+    funid = 9;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 9;
+    end
     scale = max([1, sqrt(nx)/8]);
-    linearTF = scale.*compute_rotation(9, nx);
+    linearTF = scale.*compute_rotation(inst, nx);
     xmin = ((0.5*ones(1, nx))/(linearTF))';
 end

@@ -1,4 +1,4 @@
-function y = AttractiveSectorBBOB(x)
+function y = AttractiveSectorBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,26 +32,28 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});    
     y.features = [1, 0, 1, 0, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 6;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid scales linearTF
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 6 || isempty(scales) || isempty(scales)
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst || isempty(scales)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 6;
+    funid = inst;
     scales = diag(sqrt(10).^linspace(0, 1, dim));
-    linearTF = (compute_rotation(6, dim)*scales)*compute_rotation(6 + 1e+6, dim);
+    linearTF = (compute_rotation(inst, dim)*scales)*compute_rotation(inst + 1e+6, dim);
 end
 z = ((x_shift(x, xopt)')*linearTF)';
 idx = find(z.*xopt > 0);
 z(idx) = 100*z(idx);
-y = toz(sum((z).^2))^(0.9) + get_fmin;
+y = toz(sum((z).^2))^(0.9) + fopt;
 end
 
 function z = toz(x)
@@ -122,10 +124,14 @@ function xu = get_xu(nx)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 6)/gauss(1, 6 + 1))/100)])]);
+    funid = 6;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 6))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 6;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     xmin(xmin == 0) = -1e-5;
 end

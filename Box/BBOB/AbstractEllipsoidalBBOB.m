@@ -1,4 +1,4 @@
-function y = AbstractEllipsoidalBBOB(x)
+function y = AbstractEllipsoidalBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,21 +32,23 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 0, 1, 0, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 10;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid scales R
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 10 || isempty(scales) || isempty(R)
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst || isempty(scales) || isempty(R)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 10;
+    funid = inst;
     scales = (1e+6).^linspace(0, 1, dim);
-    R = compute_rotation(10 + 1e+6, dim);
+    R = compute_rotation(inst + 1e+6, dim);
 end
 
 z = toz(x_shift(x, xopt)'*R);
@@ -121,10 +123,14 @@ function xu = get_xu(nx)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 10)/gauss(1, 10 + 1))/100)])]);
+    funid = 10;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 10))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 10;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     xmin(xmin == 0) = -1e-5;
 end

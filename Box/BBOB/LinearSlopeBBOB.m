@@ -1,4 +1,4 @@
-function y = LinearSlopeBBOB(x)
+function y = LinearSlopeBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,19 +32,21 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 1, 1, 0, 1, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 5;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid scale
-if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= 5 || isempty(scale)
+if isempty(fopt) || isempty(xopt) || dim ~= length(x) || funid ~= inst || isempty(scale)
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 5;
+    funid = inst;
     scale = (-sign(xopt').*(sqrt(100).^linspace(0, 1, dim)))';
 end
 idx_out_of_bounds = x.*xopt > 25;
@@ -96,11 +98,15 @@ function r = unif(N, inseed)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 5)/gauss(1, 5 + 1))/100)])]);
+    funid = 5;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 5))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 5;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     % xmin(xmin == 0) = -1e-5;
     xmin = 5*sign(xmin);
 end

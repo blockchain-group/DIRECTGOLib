@@ -1,4 +1,4 @@
-function y = RosenbrockBBOB(x)
+function y = RosenbrockBBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,19 +32,21 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 0, 1, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 8;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent xopt dim fopt funid
-if isempty(fopt) ||isempty(xopt) || dim ~= length(x) || funid ~= 8
+if isempty(fopt) ||isempty(xopt) || dim ~= length(x) || funid ~= inst
     dim = length(x);
-    xopt = get_xmin(dim);
+    xopt = get_xmin(dim, inst);
     fopt = get_fmin(dim);
-    funid = 8;
+    funid = inst;
 end
 z = max([1, sqrt(dim)/8]).*x_shift(x, xopt) + 1;
 y = sum(100*(z(1:end - 1).^2 - z(2:end)).^2) + sum((z(1:end - 1) - 1).^2) + fopt + pen(x);
@@ -103,11 +105,15 @@ r(r == 0) = 1e-15;
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 8)/gauss(1, 8 + 1))/100)])]);
+    funid = 8;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
-    xmin = 8*floor(1e+4*unif(nx, 8))/1e+4 - 4;
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 8;
+    end
+    xmin = 8*floor(1e+4*unif(nx, inst))/1e+4 - 4;
     xmin(xmin == 0) = -1e-5;
     xmin = 0.75*xmin;
 end

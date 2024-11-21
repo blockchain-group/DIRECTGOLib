@@ -1,69 +1,90 @@
 # DIRECTGOLib - DIRECT Global Optimization test problems Library
 
-Over a year ago, an online collection called **DIRECTGOLib** was launched. It stands for **DIRECT** **G**lobal **O**ptimization test problems **Lib**rary. It offered a range of box-, generally-constrained, and engineering test problems for global optimization without derivatives. Since then, it has experienced significant growth and development.
+![languages](https://img.shields.io/badge/language-MATLAB, R-blue)  ![release](https://img.shields.io/badge/release-v2.0-blue)  ![OS](https://img.shields.io/badge/OS-windows,linux,macOS-blue)  ![License](https://img.shields.io/badge/License-MIT-blue)  ![contributions](https://img.shields.io/badge/contributions-welcome-greene)
 
-Now, we present **DIRECTGOLib v2.0**, an updated version that builds upon the success of its predecessor, **DIRECTGOLib v1.x**. This latest iteration incorporates extensive expansion and restructuring efforts to ensure improved representation and better alignment with the current demands of testing global optimization algorithms.
+## Table of Contents
 
-All test problems are described using `MATLAB` programming language and syntax. We seek maximum usability with our recently introduced open-source tool: [DIRECTGO: A new DIRECT-type toolbox for derivative-free Global Optimization](https://github.com/blockchain-group/DIRECTGO).
-
----
-
-## Problems
-The problem library is a comprehensive collection of test problems gathered from various sources, ensuring a diverse range of scenarios and challenges. While there are numerous sources contributing to the library, there are a few that play a pivotal role in shaping its content. Users can refer to the respective problem's MATLAB file for any references not explicitly provided for further information and details.
-
-To provide an overview of the library's composition, the following table presents the number of essential parts that constitute its core:
-
-| \#   | Identifier                                                   | References                                                   | Year | Problems | Problem Type                   |
-| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- | -------- | ------------------------------ |
-| 1    | Global Optimization Test Problems - Hedar list               | Hedar, [[1]](http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO.htm) | 2005 | 31       | Box-constrained                |
-| 2    | Virtual Library of Simulation Experiments - Test Functions and Datasets | Surjanovic et al., [[2]](http://www.sfu.ca/~ssurjano/index.html) | 2013 | 50       | Box-constrained                |
-| 3    | Hard benchmark functions for global optimization             | Layeb, [[8]](https://www.mathworks.com/matlabcentral/fileexchange/106450-new-hard-benchmark-functions-for-global-optimization) | 2022 | 18       | Box-constrained                |
-| 4    | Global Optimization Benchmarks                               | Gavana, [[13](http://infinity77.net/global_optimization/index.html)] | 2013 | 193      | Box-constrained                |
-| 5    | A literature survey of benchmark functions for global optimization problems | Jamil et al., [[12]](https://doi.org/10.1504/IJMMNO.2013.055204) | 2013 | 167      | Box-constrained                |
-| 6    | Real-parameter black-box optimization benchmarking 2009: Noiseless functions definitions - BBOB | Hansen et al., [[5]](https://inria.hal.science/inria-00362633/file/RR-6829v2.pdf) | 2009 | 24       | Box-constrained                |
-| 7    | Test functions for global optimization algorithms            | Oldenhuis, [[14]](https://github.com/rodyo/FEX-testfunctions/releases/tag/v1.5) | 2020 | 41       | Box-constrained                |
-| 8    | Benchmark Functions for Single-Objective Optimization Based on a Zigzag Pattern - ABS | Kudela et al., [[9]](https://doi.org/10.1109/ACCESS.2022.3144067) | 2022 | 8        | Box-constrained                |
-| 9    | Special session and competition on single objective real-parameter numerical optimization - CEC 2014 | Liang et al., [[10]](http://bee22.com/manual/tf_images/LiangCEC2014.pdf) | 2013 | 27       | Box-constrained                |
-| 10   | Special session and competition on single objective real-parameter numerical optimization - CEC 2017 | Wu et al.,[[11]](https://www.researchgate.net/profile/Guohua-Wu-5/publication/317228117_Problem_Definitions_and_Evaluation_Criteria_for_the_CEC_2017_Competition_and_Special_Session_on_Constrained_Single_Objective_Real-Parameter_Optimization/links/5982cdbaa6fdcc8b56f59104/Problem-Definitions-and-Evaluation-Criteria-for-the-CEC-2017-Competition-and-Special-Session-on-Constrained-Single-Objective-Real-Parameter-Optimization.pdf) | 2017 | 20       | Box-constrained                |
-| 11   | A Test-suite of Non-Convex Constrained Optimization Problems from the Real-World - CEC 2006 | Liang et al., [[3]](https://www.semanticscholar.org/paper/Problem-Deflnitions-and-Evaluation-Criteria-for-the-Liang-Runarsson/c8360687b24fba42bd284e0887807497433e4d39) | 2006 | 13       | Generally/Linearly-constrained |
-| 12   | Introduction to global optimization                          | Floudas et al., [[16]](https://doi.org/10.1007/978-1-4757-3040-1). | 1999 | 20       | Generally/Linearly-constrained |
-| 13   | Derivative-Free Optimization and Applications Project        | VAZ, [[4]](http://www.norg.uminho.pt/aivaz/pswarm/)          | 2007 | 57       | Linearly-constrained           |
-| 14   | Introduction to Global Optimization                          | Horst et al., [[15]](https://books.google.lt/books?hl=lt&lr=&id=dbu02-1JbLIC&oi=fnd&pg=PR11&dq=Horst,+R.,+Pardalos,+P.M.,+Thoai,+N.V.+(1995).+Introduction+to+Global+Optimization.+Nonconvex+Optimization+and+Its+Application.+Kluwer,+Dordrecht++&ots=x7g-q7HpJ-&sig=-pFGblwR3QlWuvEUIuCyvgLK_tI&redir_esc=y#v=onepage&q&f=false) | 2000 | 7        | Linearly-constrained           |
-| 15   | Parameter estimation in the general non-linear regression model | Gillard et al., [[6]](https://www.intlpress.com/site/pub/pages/journals/items/sii/content/vols/0010/0001/a006/) | 2017 | 6        | Engineering problems           |
-| 16   | Engineering design examples                                  | Ray et al., [[7]](https://ieeexplore.ieee.org/document/1223578) | 2003 | 5        | Engineering problems           |
-| 17   | CEC 2011 competition on real-world optimization problems     | Das et al., [[17]](https://al-roomi.org/multimedia/CEC_Database/CEC2011/CEC2011_TechnicalReport.pdf) | 2010 | 19       | Engineering problems           |
-| 18   | CEC 2020 competition on real-world optimization problems     | Kumar et al., [[18]][https://doi.org/10.1016/j.swevo.2020.100693] | 2020 | 23       | Engineering problems           |
-
-Please note that the table above is a summary and does not contain the complete list of all the references in the library. If you need more detailed information about a specific problem or its source, you can find detailed documentation and information directly in the corresponding `MATLAB` file.
+- [About](#about)
+- [Documentation](#documentation)
+  - [Classification of Problems](#classification-of-problems)
+  - [Composition of Library](#composition-of-library)
+  - [Structure and Syntax](#structure-and-syntax)
+  - [Example of the Initialization of Experimental Settings](#example-of-the-initialization-of-experimental-settings)
+  - [Selection of Representative Instances](#selection-of-representative-instances)
+- [Cite Library](#cite-library)
+- [Feedback and Contributions](#feedback-and-contributions)
+- [Changelogs](#changelogs)
+  - [v2.0 - (2024-09-01)](#v2.0-(2024-09-01))
+  - [v1.3 - (2023-06-15)](#v1.3-(2023-06-15))
+  - [v1.2 - (2022-06-06)](#v1.2-(2022-06-06))
+  - [v1.1 - (2022-04-26)](#v1.1-(2022-04-26))
+- [References](#references)
 
 ---
 
-## Classification
-Based on the type of constraints, continuous global optimization test problems from **DIRECTGOLib** are classified into three main categories:
+## About
+
+An online collection called **DIRECTGOLib** stands as **DIRECT** **G**lobal **O**ptimization test problems **Lib**rary. The library presents a valuable collection of practical and test problems involving continuous variables. Initially the library created for benchmarking various DIRECT-type methods, but its current scope is suitable for any global optimization methods. Its main objective is to assist in creating and testing various numerical solvers for a wide range of global optimization problems. 
+
+The **DIRECTGOLib** is an actively maintained open-source *GitHub* repository regularly updated with new problems from various optimization domains. All functions included have been thoroughly reviewed and corrected for errors such as specified wrong global minimum values or their locations, incorrect specifications of features and improper problem formulations. In addition, some measures have been taken into account to find exact duplicates or very similar functions. The library is entirely coded in the *MATLAB* programming language, ensuring accessibility and user-friendliness for the optimization community.
+
+The last version of **DIRECTGOLib v2.0**, is an updated version that builds upon the success of its predecessor, **DIRECTGOLib v1.3**. This latest iteration incorporates extensive expansion and restructuring efforts to ensure improved representation and better alignment with the current demands of testing global optimization algorithms.
+
+---
+
+## Documentation
+
+### Classification of Problems
+
+Continuous global optimization problems from **DIRECTGOLib** are classified as follows:
+
 - [Box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Box) (324 problems in total)
 - [Linearly-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Linear) (67 problems in total)
 - [Generally-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/General) (39 problems in total)
 
-We also separate problems coming from practical applications:
-- [Engineering problems](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Engineering) (53 problems in total).
+- [Engineering problems](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Engineering) (53 problems in total)
 
----
 
-## Contribution to DIRECTGOLib
-We welcome contributions and corrections to this resource either way:
+We also separate problems coming from practical applications, which may involve various types of constraint functions.
 
-- **By email** - send us new problems, corrections, or suggestions by email: linas.stripinis@mif.vu.lt, jakub.kudela@vutbr.cz or remigijus.paulavicius@mif.vu.lt.
-- **GitHub way** - fork the GitHub repository, add new problems or correct existing ones, then create a pull request, and we gratefully incorporate your contribution!
+### Composition of Library
 
----
+The problem library is a comprehensive collection of test problems gathered from various sources, ensuring a diverse range of scenarios and challenges. While there are numerous sources contributing to the library, there are a few that play a pivotal role in shaping its content. Users can refer to the respective problem's *MATLAB* file for any references not explicitly provided for further information and details.
 
-### An example of a constrained `Tproblem`
+To provide an overview of the library's composition, the following table presents the number of essential parts that constitute its core:
 
-Mathematical formulation:
+| \#   | Identifier                                                   | References             | Year | Problems | Problem Type                   |
+| ---- | ------------------------------------------------------------ | ---------------------- | ---- | -------- | ------------------------------ |
+| 1    | Global Optimization Test Problems - Hedar list               | Hedar[^1]              | 2005 | 31       | Box-constrained                |
+| 2    | Virtual Library of Simulation Experiments - Test Functions and Datasets | Surjanovic et al.,[^2] | 2013 | 50       | Box-constrained                |
+| 3    | Hard benchmark functions for global optimization             | Layeb,[^8]             | 2022 | 18       | Box-constrained                |
+| 4    | Global Optimization Benchmarks                               | Gavana,[^13]           | 2013 | 193      | Box-constrained                |
+| 5    | A literature survey of benchmark functions for global optimization problems | Jamil et al.,[^12]     | 2013 | 167      | Box-constrained                |
+| 6    | Real-parameter black-box optimization benchmarking 2009: Noiseless functions definitions - BBOB | Hansen et al.,[^5]     | 2009 | 24       | Box-constrained                |
+| 7    | Test functions for global optimization algorithms            | Oldenhuis,[^14]        | 2020 | 41       | Box-constrained                |
+| 8    | Benchmark Functions for Single-Objective Optimization Based on a Zigzag Pattern - ABS | Kudela et al.,[^9]     | 2022 | 8        | Box-constrained                |
+| 9    | Special session and competition on single objective real-parameter numerical optimization - CEC 2014 | Liang et al.,[^10]     | 2013 | 27       | Box-constrained                |
+| 10   | Special session and competition on single objective real-parameter numerical optimization - CEC 2017 | Wu et al.,[^11]        | 2017 | 20       | Box-constrained                |
+| 11   | A Test-suite of Non-Convex Constrained Optimization Problems from the Real-World - CEC 2006 | Liang et al.,[^3]      | 2006 | 13       | Generally/Linearly-constrained |
+| 12   | Introduction to global optimization                          | Floudas et al.,[^16]   | 1999 | 20       | Generally/Linearly-constrained |
+| 13   | Derivative-Free Optimization and Applications Project        | VAZ,[^4]               | 2007 | 57       | Linearly-constrained           |
+| 14   | Introduction to Global Optimization                          | Horst et al.,[^15]     | 2000 | 7        | Linearly-constrained           |
+| 15   | Parameter estimation in the general non-linear regression model | Gillard et al.,[^6]    | 2017 | 6        | Engineering problems           |
+| 16   | Engineering design examples                                  | Ray et al.,[^7]        | 2003 | 5        | Engineering problems           |
+| 17   | CEC 2011 competition on real-world optimization problems     | Das et al.,[^17]       | 2010 | 19       | Engineering problems           |
+| 18   | CEC 2020 competition on real-world optimization problems     | Kumar et al.,[^18]     | 2020 | 23       | Engineering problems           |
+
+Please note that the table above is a summary and does not contain the complete list of all the references in the library. If you need more detailed information about a specific problem or its source, you can find detailed documentation and information directly in the corresponding *MATLAB* file.
+
+### Structure and Syntax
+
+Understanding the syntax of coded problem m-files is provided with the following example of the `Tproblem.m`, for which the mathematical formulation is defined as follows:
 
 <img src="img/tproblem.png" width="400">
 
-Description in `MATLAB`:
+The global minimum is located at x = -1, f(x) = -n.
+
+Description in *MATLAB*:
 
 
 ```matlab
@@ -108,13 +129,47 @@ end
 ```
 
 All the information needed for the algorithms about test functions is available programmatically. 
-- Whenever the `MATLAB` code for the objective function is called with no arguments, the routine return a `MATLAB` structure `y` with all the necessary fields.
+
+- Whenever the *MATLAB* code for the objective function is called with no arguments, the routine return a *MATLAB* structure `y` with all the necessary fields.
 - The value `y.nx = 0` means that the test problem is various dimensionality that the user can settle.
 - The `x` vector passed to a test problem can be either the column or a row vector.
 
+### **Example of the Initialization of Experimental Settings**
+
+The script [`Create_experiment_file.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Experimental_setup_data/Create_experiment_file.m) in the [`Experimental_setup_data`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Experimental_setup_data) folder, provides a configuration *mat*-file that replicates the experimental settings for the study of derivative-free global optimization algorithms[^19]. Then, the script [`Main.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Experimental_setup_data/Main.m) in the same folder, will utilize the created settings to loop the algorithms. The given script is compatible with **DIRECTGO**'s global optimization toolbox[^20] available in [GitHub](https://github.com/blockchain-group/DIRECTGO).
+
+Settings in the [`Create_experiment_file.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Experimental_setup_data/Create_experiment_file.m) script:
+
+- **Dimensions**: Out of 324 box-constrained test problems, 151 have fixed dimensions, 136 of which are non-scalable. There are 15 scalable problems with fixed dimensions, and 173 scalable problems were generated for dimensions n = 2, 5, 10, and 20 (with some exceptions on some CEC problems). In total, 807 test problems were obtained.
+- **Adding shifts and rotations**: Five instances were created, each containing the entire set of 807 test problems. Random domain shifts were applied to all test problems in each instance, and the last three cases also included additional rotation operations. The instance number was used as the seed for the random number generator to ensure repeatability.
+- **Stopping conditions**: The stopping criterion was when the algorithm finds a solution with an objective function value within one percent, or when the number of function evaluations exceeded the prescribed limit of 10<sup>5</sup>×n, or when the execution time limit of 600 CPU seconds was reached.
+
+The result files from the experiments are in the same format as given in the study[^19] which can be accessed directly from the [Zenodo](https://doi.org/10.5281/zenodo.10201845).
+
+### **Selection of Representative Instances**
+
+While specific corrections have been made to **DIRECTGOLib** to remove the duplicates and highly similar problems, there remains uncertainty regarding the representation of certain types of problems. To mitigate the risk of obtaining biased results and to conserve resources required for experimentation, the utilization of the following instance selection methods is advisable. The following scripts are adapted to select representative instances from the pool of instances used in the study[^19], and these scripts creates configuration *mat*-file comprising the desired number of selected instances:
+
+* **Random selection of instances**: The script [`ISM_ud_rand.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_Random/ISM_ud_rand.m) in the [`Instance_selection/ISM_Random`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_Random) folder, randomly selects the desired number of instances from a entire set[^21].
+* **Utilizing ELA landscape features for instances selection**: The script [`script_run_flacco.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/Compute_ELA/script_run_flacco.m) in the [`Instance_selection/Compute_ELA`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/Compute_ELA) folder, computes the ELA landscape features utilizing *Flacco* **R** package[^23]. Then, using the next three instance selection methods, the desired number of instances will be selected:
+  * The script [`ISM_cs_hc.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA/ISM_cs_hc.m) in the [`Instance_selection/ISM_ELA`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA) folder, use cosine similarity between ELA feature vectors to measure instance similarity and then select the instance closest to the centroid of each cluster using Hierarchical Clustering[^22].
+  * The script [`ISM_md_greedy.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA/ISM_md_greedy.m) in the [`Instance_selection/ISM_ELA`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA) folder, use Manhattan distance between ELA feature vectors to measure instance similarity and then select instances using Greedy approach[^24].
+  * The script [`ISM_ed_maxdiv.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA/ISM_ed_maxdiv.m) in the [`Instance_selection/ISM_ELA`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA) folder, use Euclidean distances between ELA feature vectors to measure instance similarity and then select instances using optimization perspective[^25].
+* **Utilizing algorithm performance for instances selection**: The script [`ISM_rb_greedy.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_AP/ISM_rb_greedy.m) in the [`Instance_selection/ISM_AP`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_AP) folder, utilize the runtime behavior of eight algorithm performance data to measure instance similarity and then select instances using Greedy approach[^26].
+* **Utilizing both ELA landscape features and algorithm performance for instances selection**: The script [`ISM_ped_wids.m`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA_AP/ISM_ped_wids.m) in the [`Instance_selection/ISM_ELA_AP`](https://github.com/blockchain-group/DIRECTGOLib/tree/main/Instance_selection/ISM_ELA_AP) folder, selects instances by addressing the Weight Independent Dominating Set problem, where the similarity of the instances is defined with algorithm performance data and statistical tests, while the Euclidean distances between ELA feature vectors correspond to the weights[^26].
+
 ---
 
-## Cite DIRECTGOLib
+## Feedback and Contributions
+
+We welcome contributions and corrections to this resource either way:
+
+- **By email** - send us new problems, corrections, or suggestions by email: linas.stripinis@mif.vu.lt, jakub.kudela@vutbr.cz or remigijus.paulavicius@mif.vu.lt.
+- **GitHub way** - fork the GitHub repository, add new problems or correct existing ones, then create a pull request, and we gratefully incorporate your contribution!
+
+---
+
+## Cite Library
 Please use the following BibTeX entry, if you consider citing **DIRECTGOLib**:
 
 ```latex
@@ -134,7 +189,7 @@ Please use the following BibTeX entry, if you consider citing **DIRECTGOLib**:
 
 ## Changelogs
 
-### [v2.0](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v2.0) - (2023-06-16)
+### [v2.0](https://github.com/blockchain-group/DIRECTGOLib/releases/tag/v2.0) - (2024-09-01)
 
 **Upgraded**
 
@@ -145,7 +200,7 @@ The functionality of each function has been modified
 The functionality of box-constrained function has been improved:
 
 - For each box-constrained global optimization test function, eight fundamental features are available, which can be accessed using `y.features`. This function returns a vector of ones and zeros, where one value indicates that the corresponding feature is present and zero indicates its absence. The list of features includes Differentiable, Separable, Scalable, Multi-modal, Non-convex, Non-plateau, Non-Zero-Solution, and Symmetric.
-- A new feature, `y.libraries`, has been introduced for all box-constrained global optimization test functions. It provides a vector of zeros and ones, indicating the membership of each test problem in specific global optimization libraries. A value of one denotes that the corresponding library includes the function, while zero indicates its absence. The order of the libraries is as follows: [[1](http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO.htm), [2](https://www.sfu.ca/~ssurjano/optimization.html), [8](https://doi.org/10.48550/arXiv.2202.04606), [13](http://infinity77.net/global_optimization/index.html), [12](https://doi.org/10.1504/IJMMNO.2013.055204), [5](https://inria.hal.science/inria-00362633/file/RR-6829v2.pdf), [14](https://github.com/rodyo/FEX-testfunctions/releases/tag/v1.5), [9](https://doi.org/10.1109/ACCESS.2022.3144067), [10](http://bee22.com/manual/tf_images/Liang CEC2014.pdf), [11](https://www.researchgate.net/profile/Guohua-Wu-5/publication/317228117_Problem_Definitions_and_Evaluation_Criteria_for_the_CEC_2017_Competition_and_Special_Session_on_Constrained_Single_Objective_Real-Parameter_Optimization/links/5982cdbaa6fdcc8b56f59104/Problem-Definitions-and-Evaluation-Criteria-for-the-CEC-2017-Competition-and-Special-Session-on-Constrained-Single-Objective-Real-Parameter-Optimization.pdf)].
+- A new feature, `y.libraries`, has been introduced for all box-constrained global optimization test functions. It provides a vector of zeros and ones, indicating the membership of each test problem in specific global optimization libraries. A value of one denotes that the corresponding library includes the function, while zero indicates its absence. The order of the libraries is as follows: [^1],[^2],[^8],[^13],[^12],[^5],[^14],[^9],[^10],[^11].
 
 **Added**
 
@@ -205,21 +260,29 @@ One [box-constrained](https://github.com/blockchain-group/DIRECTGOLib/tree/main/
 
 ## References
 
-1. Hedar, A. (2005). Test functions for unconstrained global optimization. URL: [(kyoto-u.ac.jp)](http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO.htm).
-2. Surjanovic, S., & Bingham, D. (2013). Virtual Library of Simulation Experiments: Test Functions and Datasets. URL: [(sfu.ca)](https://www.sfu.ca/~ssurjano/optimization.html).
-3. Liang, J. J., Runarsson, T. P., Mezura-Montes, E., Clerc, M., Suganthan, P. N., Coello, C. A. C., & Deb, K. (2006). Problem definitions and evaluation criteria for the CEC 2006 special session on constrained real-parameter optimization. *Journal of Applied Mechanics*, *41*(8), 8–31. URL: [(cvut.cz)](https://cw.fel.cvut.cz/b181/_media/courses/a0m33eoa/cviceni/2006_problem_definitions_and_evaluation_criteria_for_the_cec_2006_special_session_on_constraint_real-parameter_optimization.pdf).
-4. Vaz, A.I.F. (2007). Derivative-Free Optimization and Applications Project. URL: [(uminho.pt)](http://www.norg.uminho.pt/aivaz/pswarm/).
-5. Hansen, N., Finck, S., Ros, R., & Auger, A. (2009). Real-parameter black-box optimization benchmarking 2009: Noiseless functions definitions *(Doctoral dissertation, INRIA)*. URL: [(hal.science)](https://inria.hal.science/inria-00362633/file/RR-6829v2.pdf).
-6. Gillard, J. W., & Kvasov, D. E. (2017). Lipschitz optimization methods for fitting a sum of damped sinusoids to a series of observations. *Statistics and Its Interface*, *10*(1), 59–70. DOI: [10.4310/SII.2017.v10.n1.a6](https://doi.org/10.4310/SII.2017.v10.n1.a6).
-7. Ray, T., & Liew, K.-M. (2003). Society and civilization: an optimization algorithm based on the simulation of social behavior. *IEEE Transactions on Evolutionary Computation*, *7*(4), 386–396. DOI: [10.1109/TEVC.2003.814902](https://doi.org/10.1109/TEVC.2003.814902).
-8. Layeb, A. (2022). New hard benchmark functions for global optimization. *ArXiv Preprint ArXiv:2202.04606*. DOI: [10.48550/arXiv.2202.04606](https://doi.org/10.48550/arXiv.2202.04606).
-9. Kudela, J., & Matousek, R. (2022). New benchmark functions for single-objective optimization based on a zigzag pattern. *IEEE Access*, *10*, 8262–8278. DOI: [10.1109/ACCESS.2022.3144067](https://doi.org/10.1109/ACCESS.2022.3144067).
-10. Liang, J. J., Qu, B. Y., & Suganthan, P. N. (2013). Problem definitions and evaluation criteria for the CEC 2014 special session and competition on single objective real-parameter numerical optimization. *Computational Intelligence Laboratory, Zhengzhou University, Zhengzhou China and Technical Report, Nanyang Technological University, Singapore*, *635*(2). URL: [(bee22.com)](http://bee22.com/manual/tf_images/Liang CEC2014.pdf).
-11. Wu, G., Mallipeddi, R., & Suganthan, P. N. (2017). Problem definitions and evaluation criteria for the CEC 2017 competition on constrained real-parameter optimization. *National University of Defense Technology, Changsha, Hunan, PR China and Kyungpook National University, Daegu, South Korea and Nanyang Technological University, Singapore, Technical Report*. URL: [(researchgate.net)](https://www.researchgate.net/profile/Guohua-Wu-5/publication/317228117_Problem_Definitions_and_Evaluation_Criteria_for_the_CEC_2017_Competition_and_Special_Session_on_Constrained_Single_Objective_Real-Parameter_Optimization/links/5982cdbaa6fdcc8b56f59104/Problem-Definitions-and-Evaluation-Criteria-for-the-CEC-2017-Competition-and-Special-Session-on-Constrained-Single-Objective-Real-Parameter-Optimization.pdf).
-12. Jamil, M., & Yang, X.-S. (2013). A literature survey of benchmark functions for global optimization problems. *International Journal of Mathematical Modelling and Numerical Optimisation*, *4*(2), 150–194. DOI: [10.1504/IJMMNO.2013.055204](https://doi.org/10.1504/IJMMNO.2013.055204).
-13. Gavana, A. (2013). Global Optimization Benchmarks and AMPGO — AMPGO 0.1.0 documentation. URL: [(infinity77.net)](http://infinity77.net/global_optimization/index.html).
-14. Oldenhuis, R. (2020): Test functions for global optimization algorithms. Release v1.5. URL: [(GitHub.com)](https://github.com/rodyo/FEX-testfunctions/releases/tag/v1.5).
-15. Horst, R., Pardalos, P. M., & van Thoai, N. (2000). Introduction to global optimization. *Springer Science & Business Media.* URL: [(books.google.com)](https://books.google.lt/books?hl=lt&lr=&id=dbu02-1JbLIC&oi=fnd&pg=PR11&dq=Horst,+R.,+Pardalos,+P.M.,+Thoai,+N.V.+(1995).+Introduction+to+Global+Optimization.+Nonconvex+Optimization+and+Its+Application.+Kluwer,+Dordrecht++&ots=x7g-q7HpJ-&sig=-pFGblwR3QlWuvEUIuCyvgLK_tI&redir_esc=y#v=onepage&q&f=false).
-16. Floudas, C. A., Pardalos, P. M., Adjiman, C., Esposito, W. R., Gümüs, Z. H., Harding, S. T., Klepeis, J. L., Meyer, C. A., & Schweiger, C. A. (1999). Handbook of test problems in local and global optimization. (Vol. 33). *Nonconvex Optimization and Its Applications. Springer Science & Business Media.* DOI: [10.1007/978-1-4757-3040-1](https://doi.org/10.1007/978-1-4757-3040-1).
-17. Das, S., & Suganthan, P. N. (2010). Problem definitions and evaluation criteria for CEC 2011 competition on testing evolutionary algorithms on real-world optimization problems. *Jadavpur University, Nanyang Technological University, Kolkata*, 341–359. [(al-roomi.org)](https://al-roomi.org/multimedia/CEC_Database/CEC2011/CEC2011_TechnicalReport.pdf)
-18. Kumar, A., Wu, G., Ali, M. Z., Mallipeddi, R., Suganthan, P. N., & Das, S. (2020). A test-suite of non-convex constrained optimization problems from the real-world and some baseline results. *Swarm and Evolutionary Computation*, *56*, 100693. DOI: [10.1016/j.swevo.2020.100693][https://doi.org/10.1016/j.swevo.2020.100693]
+[^1]: Hedar, A. (2005). *Test functions for unconstrained global optimization*. [[Link to webpage]](http://www-optima.amp.i.kyoto-u.ac.jp/member/student/hedar/Hedar_files/TestGO.htm)
+[^2]:Surjanovic, S., & Bingham, D. (2013). *Virtual Library of Simulation Experiments: Test Functions and Datasets.* [[Link to webpage]](https://www.sfu.ca/~ssurjano/optimization.html)
+[^3]: Liang, J. J., Runarsson, T. P., Mezura-Montes, E., Clerc, M., Suganthan, P. N., Coello, C. A. C., & Deb, K. (2006). *Problem definitions and evaluation criteria for the CEC 2006 special session on constrained real-parameter optimization.* Journal of Applied Mechanics, *41*(8), 8–31. [[Link to paper]](https://cw.fel.cvut.cz/b181/_media/courses/a0m33eoa/cviceni/2006_problem_definitions_and_evaluation_criteria_for_the_cec_2006_special_session_on_constraint_real-parameter_optimization.pdf)
+[^4]: Vaz, A.I.F. (2007). *Derivative-Free Optimization and Applications Project.* [[Link to webpage]](http://www.norg.uminho.pt/aivaz/pswarm/)
+[^5]: Hansen, N., Finck, S., Ros, R., & Auger, A. (2009). *Real-parameter black-box optimization benchmarking 2009: Noiseless functions definitions*. [[Link to paper]](https://inria.hal.science/inria-00362633/file/RR-6829v2.pdf)
+[^6]: Gillard, J. W., & Kvasov, D. E. (2017). *Lipschitz optimization methods for fitting a sum of damped sinusoids to a series of observations.* Statistics and Its Interface, *10*(1), 59–70. DOI: 10.4310/SII.2017.v10.n1.a6. [[Link to paper]](https://doi.org/10.4310/SII.2017.v10.n1.a6)
+[^7]: Ray, T., & Liew, K.-M. (2003). *Society and civilization: an optimization algorithm based on the simulation of social behavior.* IEEE Transactions on Evolutionary Computation, *7*(4), 386–396. DOI: 10.1109/TEVC.2003.814902. [[Link to paper]](https://doi.org/10.1109/TEVC.2003.814902)
+[^8]: Layeb, A. (2022). *New hard benchmark functions for global optimization.* DOI: 10.48550/arXiv.2202.04606. [[Link to paper]](https://doi.org/10.48550/arXiv.2202.04606)
+[^9]: Kudela, J., & Matousek, R. (2022). *New benchmark functions for single-objective optimization based on a zigzag pattern.* IEEE Access, *10*, 8262–8278. DOI: 10.1109/ACCESS.2022.3144067. [[Link to paper]](https://doi.org/10.1109/ACCESS.2022.3144067)
+[^10]: Liang, J. J., Qu, B. Y., & Suganthan, P. N. (2013). *Problem definitions and evaluation criteria for the CEC 2014 special session and competition on single objective real-parameter numerical optimization.* Computational Intelligence Laboratory, Singapore, *635*(2). [[Link to paper]](http://bee22.com/manual/tf_images/Liang CEC2014.pdf)
+[^11]: Wu, G., Mallipeddi, R., & Suganthan, P. N. (2017). *Problem definitions and evaluation criteria for the CEC 2017 competition on constrained real-parameter optimization.* National University of Defense Technology, Singapore, Technical Report. [[Link to paper]](https://www.researchgate.net/profile/Guohua-Wu-5/publication/317228117_Problem_Definitions_and_Evaluation_Criteria_for_the_CEC_2017_Competition_and_Special_Session_on_Constrained_Single_Objective_Real-Parameter_Optimization/links/5982cdbaa6fdcc8b56f59104/Problem-Definitions-and-Evaluation-Criteria-for-the-CEC-2017-Competition-and-Special-Session-on-Constrained-Single-Objective-Real-Parameter-Optimization.pdf)
+[^12]: Jamil, M., & Yang, X.-S. (2013). *A literature survey of benchmark functions for global optimization problems.* International Journal of Mathematical Modelling and Numerical Optimization, *4*(2), 150–194. DOI: 10.1504/IJMMNO.2013.055204. [[Link to paper]](https://doi.org/10.1504/IJMMNO.2013.055204)
+[^13]: Gavana, A. (2013). *Global Optimization Benchmarks and AMPGO — AMPGO 0.1.0 documentation.* [[Link to webpage]](http://infinity77.net/global_optimization/index.html)
+[^14]: Oldenhuis, R. (2020): *Test functions for global optimization algorithms. Release v1.5.* [[Link to webpage]](https://github.com/rodyo/FEX-testfunctions/releases/tag/v1.5)
+[^15]: Horst, R., Pardalos, P. M., & van Thoai, N. (2000). *Introduction to global optimization.* Springer Science & Business Media. [[Link to book]](https://books.google.lt/books?hl=lt&lr=&id=dbu02-1JbLIC&oi=fnd&pg=PR11&dq=Horst,+R.,+Pardalos,+P.M.,+Thoai,+N.V.+(1995).+Introduction+to+Global+Optimization.+Nonconvex+Optimization+and+Its+Application.+Kluwer,+Dordrecht++&ots=x7g-q7HpJ-&sig=-pFGblwR3QlWuvEUIuCyvgLK_tI&redir_esc=y#v=onepage&q&f=false)
+[^16]: Floudas, C. A., Pardalos, P. M., Adjiman, C., Esposito, W. R., Gümüs, Z. H., Harding, S. T., Klepeis, J. L., Meyer, C. A., & Schweiger, C. A. (1999). *Handbook of test problems in local and global optimization.* Nonconvex Optimization and Its Applications. Springer Science & Business Media. DOI: 10.1007/978-1-4757-3040-1. [[Link to book]](https://doi.org/10.1007/978-1-4757-3040-1)
+[^17]: Das, S., & Suganthan, P. N. (2010). *Problem definitions and evaluation criteria for CEC 2011 competition on testing evolutionary algorithms on real-world optimization problems.* Jadavpur University, Nanyang Technological University, Kolkata, 341–359. [[Link to paper]](https://al-roomi.org/multimedia/CEC_Database/CEC2011/CEC2011_TechnicalReport.pdf)
+[^18]: Kumar, A., Wu, G., Ali, M. Z., Mallipeddi, R., Suganthan, P. N., & Das, S. (2020). *A test-suite of non-convex constrained optimization problems from the real-world and some baseline results.* Swarm and Evolutionary Computation, *56*, 100693. DOI: 10.1016/j.swevo.2020.100693. [[Link to paper]](https://doi.org/10.1016/j.swevo.2020.100693)
+[^19]: Stripinis, L., Kůdela, J., & Paulavičius, R. (2024). *Benchmarking Derivative-Free Global Optimization Algorithms Under Limited Dimensions and Large Evaluation Budgets.* IEEE Transactions on Evolutionary Computation. DOI: 10.1109/TEVC.2024.3379756. [[Link to paper]](https://doi.org/10.1109/TEVC.2024.3379756)
+[^20]: Stripinis, L. & Paulavičius, R. (2022). *DIRECTGO: "A new DIRECT-type MATLAB toolbox for derivative-free global optimization.* ACM Transactions on Mathematical Software, vol. 48, no. 4, dec 2022. DOI 10.1145/3559755. [[Link to paper]](https://doi.org/10.1145/3559755)
+[^21]:Pascal Kerschke, Holger H. Hoos, Frank Neumann, and Heike Trautmann. 2019. Automated Algorithm Selection: Survey and Perspectives. Evol. Comput. 27, 1 (Spring 2019), 3–45, DOI: 10.1162/evco_a_00242. [[Link to paper]](https://doi.org/10.1162/evco_a_00242)
+[^22]:Gjorgjina Cenikj, Ryan Dieter Lang, Andries Petrus Engelbrecht, Carola Doerr, Peter Korošec, and Tome Eftimov. 2022. SELECTOR: selecting a representative benchmark suite for reproducible statistical comparison. In Proceedings of the GECCO '22. Association for Computing Machinery, New York, NY, USA, 620–629. DOI: 10.1145/3512290.3528809. [[Link to paper]](https://doi.org/10.1145/3512290.3528809)
+[^23]: P. Kerschke and H. Trautmann, Comprehensive Feature-Based Land scape Analysis of Continuous and Constrained Optimization Problems Using the R-Package Flacco. Cham: Springer International Publishing, 2019, pp. 93–123, DOI: 10.1007/978-3-030-25147-5_7. [[Link to paper]](https://doi.org/10.1007/978-3-030-25147-5_7)
+[^24]:Konstantin Dietrich, Diederick Vermetten, Carola Doerr, and Pascal Kerschke. 2024. Impact of Training Instance Selection on Automated Algorithm Selection Models for Numerical Black-box Optimization. In Proceedings of the GECCO '24. Association for Computing Machinery, New York, NY, USA, 1007–1016, DOI: 10.1145/3638529.3654100. [][Link to paper]](https://doi.org/10.1145/3638529.3654100)
+[^25]:Gleixner, A., Hendel, G., Gamrath, G. et al. MIPLIB 2017: data-driven compilation of the 6th mixed-integer programming library. Math. Prog. Comp. 13, 443–490 (2021), DOI: 10.1007/s12532-020-00194-3. [[Link to paper]](https://doi.org/10.1007/s12532-020-00194-3)
+[^26]:Stripinis, L., Kůdela, J., & R. Paulavičius, (2024) "New Algorithm Performance-based Strategies for Benchmark Function Selection in Continuous Global Optimization." IEEE Transactions on Cybernetics

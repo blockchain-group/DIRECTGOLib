@@ -1,4 +1,4 @@
-function y = GallagherGaussian101BBOB(x)
+function y = GallagherGaussian101BBOB(x, inst)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
@@ -32,38 +32,40 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 0, 1, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
     return
+elseif nargin == 1
+    inst = 21;
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
 persistent dim fopt funid xlocal nhighpeaks peakvalues fac arrscales rotation
-if isempty(fopt) || dim ~= length(x) || funid ~= 21 || isempty(xlocal) ...
+if isempty(fopt) || dim ~= length(x) || funid ~= inst || isempty(xlocal) ...
    || isempty(nhighpeaks) || isempty(peakvalues) || isempty(fac) || ...
    isempty(arrscales) || isempty(rotation)
     dim = length(x);
     fopt = get_fmin(dim);
-    funid = 21;
+    funid = inst;
     fitvalues = [1.1, 9.1]; 
     nhighpeaks = 101; 
     fac2 = 1; 
     highpeakcond = 1000^0.5;
     maxcondition = 1000;
-    rotation = compute_rotation(funid, dim);
+    rotation = compute_rotation(inst, dim);
     arrcondition = (maxcondition.^linspace(0, 1, nhighpeaks - 1))';
-    idx = argsort(unif(nhighpeaks - 1, funid));
+    idx = argsort(unif(nhighpeaks - 1, inst));
     arrcondition = [highpeakcond; arrcondition(idx)];
     arrscales = zeros(nhighpeaks, dim);
     for i = 1:length(arrcondition)
         s = arrcondition(i).^linspace(-0.5, 0.5, dim);
-        idx = argsort(unif(dim, funid + (1e+3)*(i - 1)));
+        idx = argsort(unif(dim, inst + (1e+3)*(i - 1)));
         arrscales(i, :) = s(idx);
     end
     peakvalues = [10, linspace(fitvalues(1), fitvalues(2), nhighpeaks - 1)];  
     fac = -0.5/dim;
-    xlocal = fac2*reshape(10*unif(dim*nhighpeaks, funid) - 5, [dim, nhighpeaks])'*rotation;
+    xlocal = fac2*reshape(10*unif(dim*nhighpeaks, inst) - 5, [dim, nhighpeaks])'*rotation;
     xlocal(1, :) = 0.8*xlocal(1, :);
 end
 z = x'*rotation;
@@ -152,13 +154,17 @@ function [sorted_indices, sorted_M] = argsort(M, mode)
 end
 
 function fmin = get_fmin(~)
-    fmin = min([1000, max([-1000, (round(100*100*gauss(1, 21)/gauss(1, 21 + 1))/100)])]);
+    funid = 21;
+    fmin = min([1000, max([-1000, (round(100*100*gauss(1, funid)/gauss(1, funid + 1))/100)])]);
 end
 
-function xmin = get_xmin(nx)
+function xmin = get_xmin(nx, inst)
+    if nargin == 1
+        inst = 21;
+    end
     fac2 = 1;
-    rotation = compute_rotation(21, nx);
-    xlocal = fac2*reshape(10*unif(nx*101, 21) - 5, [nx, 101])'*rotation;
+    rotation = compute_rotation(inst, nx);
+    xlocal = fac2*reshape(10*unif(nx*101, inst) - 5, [nx, 101])'*rotation;
     xlocal(1, :) = 0.8*xlocal(1, :);
     xmin = (xlocal(1, :)*transpose(rotation))';
 end
