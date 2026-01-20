@@ -15,8 +15,8 @@ function y = Chichinadze(x)
 %    URL: https://github.com/rodyo/FEX-testfunctions/releases/tag/v1.5
 %
 % Globally optimal solution:
-%   f = -42.94438701899099442016
-%   x = [6.18986658601429873272; 0.49999992290493755487]
+%   f = -43.315862072142629
+%   x = [5.901328530885174; 0.5]
 %
 % Default variable bounds:
 %   -30 <= x(i) <= 30, i = 1,...,n
@@ -44,7 +44,7 @@ if nargin == 0
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
-y = x(1)^2 - 12*x(1) + 11 + 10*cos(pi*x(1)/2) + 8*sin(5*pi*x(1)/2) - ...
+y = x(1)^2 - 12*x(1) + 11 + 10*cos(pi*x(1)/2) + 8*sin(5*pi*x(1)) - ...
     sqrt(1/5)*exp(-0.5*((x(2) - 0.5)^2));
 end
 
@@ -57,9 +57,9 @@ function xu = get_xu(nx)
 end
 
 function fmin = get_fmin(~)
-    fmin = -42.94438701899099442016;
+    fmin = -43.315862072142629;
 end
 
 function xmin = get_xmin(~)
-    xmin = [6.18986658601429873272; 0.49999992290493755487];
+    xmin = [5.901328530885174; 0.5];
 end
