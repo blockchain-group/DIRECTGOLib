@@ -1,8 +1,8 @@
-function y = BoxBetts(x)
+function y = Box(x)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
-%   BoxBetts.m
+%   Box.m
 %
 % References:
 %  - Gavana, A.: Global optimization benchmarks and ampgo. 
@@ -27,7 +27,7 @@ function y = BoxBetts(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Differentiable, Non-separable, Non-scalable, Multi-modal,
+%   Differentiable, Non-Separable, Non-scalable, Multi-modal,
 %   Non-convex, Non-plateau, Non-Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
@@ -46,9 +46,11 @@ if size(x, 2) > size(x, 1), x = x'; end
 
 y = 0;
 for i = 1:10
-y = y + (exp(-0.1*(i + 1))*x(1) - exp(-0.1*(i + 1))*x(2) - ...
-    (exp(-0.1*(i + 1)) - exp(-0.1*(i + 1))*x(2)))^2;
+    t = -0.1*i;
+    r = exp(t*x(1)) - exp(t*x(2)) + (exp(-i) - exp(t))*x(3);
+    y = y + r^2;
 end
+
 end
 
 function xl = get_xl(~)
