@@ -14,7 +14,8 @@ function y = Deb02(x)
 %
 % Globally optimal solution:
 %   f = -1
-%   x(i) = 1, i = 1,...,n
+%   x(i) = for each x(i) = (0.05 + m/10)^(4/3), m in {1,3,5,7,9}, Hence
+%   there are 5^n minimizers in [0,1]^n.
 %
 % Default variable bounds:
 %   0 <= x(i) <= 1, i = 1,...,n
@@ -35,14 +36,14 @@ if nargin == 0
     y.xl = @(nx) get_xl(nx); 
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
-    y.xmin = @(nx) get_xmin(nx);
+    y.xmin = @(nx, varargin) get_xmin(nx, varargin{:});
     y.features = [1, 1, 1, 1, 0, 0, 0, 1];
     y.libraries = [0, 0, 0, 1, 1, 0, 0, 0, 0, 0];
     return
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
-y = -(1/length(x))*sum(sin(5*pi*(x.^(3/4) - 0.5)).^6);
+y = -(1/length(x))*sum(sin(5*pi*(x.^(3/4) - 0.05)).^6);
 end
 
 function xl = get_xl(nx)
@@ -57,6 +58,29 @@ function fmin = get_fmin(~)
     fmin = -1;
 end
 
-function xmin = get_xmin(nx)
-    xmin = ones(nx, 1);
+function xmin = get_xmin(nx, mode)
+    % xmin = GET_XMIN(nx)         returns one minimizer (default).
+    % xmin = GET_XMIN(nx,'all')   returns all 5^nx minimizers.
+
+    if nargin < 2 || isempty(mode)
+        mode = 'one';
+    end
+
+    m = [1, 3, 5, 7, 9];
+    vals = (0.05 + m/10).^(4/3);
+
+    if strcmpi(mode, 'one')
+        % Deterministic choice: first value in each coordinate
+        xmin = vals(1)*ones(1, nx);
+        return
+    end
+
+    % Otherwise: return all minimizers
+    grids = cell(1, nx);
+    [grids{:}] = ndgrid(vals);
+
+    xmin = zeros(nx, 5^nx);
+    for k = 1:nx
+        xmin(k, :) = grids{k}(:);
+    end
 end
