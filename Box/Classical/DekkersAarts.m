@@ -1,8 +1,8 @@
-function y = DeckkersAarts(x)
+function y = DekkersAarts(x)
 % -------------------------------------------------------------------------
 % MATLAB coding by: Linas Stripinis
 % Name:
-%   DeckkersAarts.m
+%   DekkersAarts.m
 %
 % References:
 %  - Gavana, A.: Global optimization benchmarks and ampgo. 
