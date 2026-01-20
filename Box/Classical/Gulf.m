@@ -14,7 +14,7 @@ function y = Gulf(x)
 %
 % Globally optimal solution:
 %   f = 0
-%   x = [50; 25; 0.75]
+%   x = [50; 25; 1.5]
 %
 % Default variable bounds:
 %   0 <= x(i) <= 60, i = 1,...,n
@@ -45,7 +45,7 @@ if size(x, 2) > size(x, 1), x = x'; end
 y = 0;
 for i=1:99
     t = i*0.01;
-    aa = 25+((-50*log(t))^2)^(2/3);
+    aa = 25+(-50*log(t))^(2/3);
     y = y + (exp(-((abs(aa-x(2))^x(3))/x(1)))-t)^2;
 end
 end 
@@ -63,5 +63,5 @@ function fmin = get_fmin(~)
 end
 
 function xmin = get_xmin(~)
-    xmin = [50; 25; 0.75];
+    xmin = [50; 25; 1.5];
 end
