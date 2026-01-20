@@ -30,7 +30,7 @@ function y = PowellSingular01(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Differentiable, Separable, Scalable, Uni-modal,
+%   Differentiable, Non-Separable, Scalable, Uni-modal,
 %   Convex, Non-plateau, Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
@@ -41,7 +41,7 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [1, 1, 1, 0, 1, 0, 1, 0];
+    y.features = [1, 0, 1, 0, 1, 0, 1, 0];
     y.libraries = [1, 1, 0, 1, 1, 0, 0, 0, 0, 0];
     return
 end

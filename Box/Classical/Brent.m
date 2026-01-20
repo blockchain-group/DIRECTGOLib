@@ -25,7 +25,7 @@ function y = Brent(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Differentiable, Non-separable, Non-scalable, Uni-modal,
+%   Differentiable, Separable, Non-scalable, Uni-modal,
 %   Convex, Non-plateau, Non-Zero-Solution, Symmetric
 % -------------------------------------------------------------------------
 if nargin == 0
@@ -36,7 +36,7 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [1, 0, 0, 0, 1, 0, 0, 1];
+    y.features = [1, 1, 0, 0, 1, 0, 0, 1];
     y.libraries = [0, 0, 0, 1, 1, 0, 0, 0, 0, 0];
     return
 end

@@ -25,7 +25,7 @@ function y = Schwefel360(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Differentiable, Separable, Non-scalable, Multi-modal,
+%   Differentiable, Non-Separable, Non-scalable, Multi-modal,
 %   Non-convex, Non-plateau, Non-Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
@@ -36,7 +36,7 @@ if nargin == 0
     y.xu = @(nx) get_xu(nx);
     y.fmin = @(nx) get_fmin(nx);
     y.xmin = @(nx) get_xmin(nx);
-    y.features = [1, 1, 0, 1, 0, 0, 0, 0];
+    y.features = [1, 0, 0, 1, 0, 0, 0, 0];
     y.libraries = [0, 0, 0, 1, 1, 0, 0, 0, 0, 0];
     return
 end

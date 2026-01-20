@@ -25,7 +25,7 @@ function y = Hansen(x)
 %   #h = 0;
 %
 % Known characteristics of test function:
-%   Differentiable, Separable, Non-scalable, Multi-modal,
+%   Differentiable, Non-Separable, Non-scalable, Multi-modal,
 %   Non-convex, Non-plateau, Non-Zero-Solution, Asymmetric
 % -------------------------------------------------------------------------
 if nargin == 0
