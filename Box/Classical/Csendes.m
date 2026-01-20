@@ -14,10 +14,10 @@ function y = Csendes(x)
 %
 % Globally optimal solution:
 %   f = 0
-%   x(i) = 10^(-100), i = 1,...,n
+%   x(i) = 0, i = 1,...,n
 %
 % Default variable bounds:
-%   -10 <= x(i) <= 10, i = 1,...,n
+%   -1 <= x(i) <= 1, i = 1,...,n
 %
 % Problem Properties:
 %   n  = any dimension;
@@ -42,16 +42,20 @@ if nargin == 0
 end
 if size(x, 2) > size(x, 1), x = x'; end
 
-x(x==0) = 1e-10;
+if any(x == 0)
+    y = 0;
+    return
+end
+
 y = sum((x.^6).*(2 + sin(1./x)));
 end
 
 function xl = get_xl(nx)
-    xl = -10*ones(nx, 1);
+    xl = -1*ones(nx, 1);
 end
 
 function xu = get_xu(nx)
-    xu = 10*ones(nx, 1);
+    xu = 1*ones(nx, 1);
 end
 
 function fmin = get_fmin(~)
@@ -59,5 +63,5 @@ function fmin = get_fmin(~)
 end
 
 function xmin = get_xmin(nx)
-    xmin = ones(nx, 1)*10^(-100);
+    xmin = zeros(nx, 1);
 end
